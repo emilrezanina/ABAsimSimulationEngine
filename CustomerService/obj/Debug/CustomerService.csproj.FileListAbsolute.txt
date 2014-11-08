@@ -1,0 +1,17 @@
+C:\Users\Emil\Documents\Visual Studio 2013\Projects\FEI\ABAsimSimulationEngine\CustomerService\obj\Debug\CustomerService.csprojResolveAssemblyReference.cache
+C:\Users\Emil\Documents\Visual Studio 2013\Projects\FEI\ABAsimSimulationEngine\CustomerService\obj\Debug\MainWindow.baml
+C:\Users\Emil\Documents\Visual Studio 2013\Projects\FEI\ABAsimSimulationEngine\CustomerService\obj\Debug\MainWindow.g.cs
+C:\Users\Emil\Documents\Visual Studio 2013\Projects\FEI\ABAsimSimulationEngine\CustomerService\obj\Debug\App.g.cs
+C:\Users\Emil\Documents\Visual Studio 2013\Projects\FEI\ABAsimSimulationEngine\CustomerService\obj\Debug\CustomerService_MarkupCompile.cache
+C:\Users\Emil\Documents\Visual Studio 2013\Projects\FEI\ABAsimSimulationEngine\CustomerService\obj\Debug\CustomerService.g.resources
+C:\Users\Emil\Documents\Visual Studio 2013\Projects\FEI\ABAsimSimulationEngine\CustomerService\obj\Debug\CustomerService.Properties.Resources.resources
+C:\Users\Emil\Documents\Visual Studio 2013\Projects\FEI\ABAsimSimulationEngine\CustomerService\obj\Debug\CustomerService.csproj.GenerateResource.Cache
+C:\Users\Emil\Documents\Visual Studio 2013\Projects\FEI\ABAsimSimulationEngine\CustomerService\bin\Debug\CustomerService.exe.config
+C:\Users\Emil\Documents\Visual Studio 2013\Projects\FEI\ABAsimSimulationEngine\CustomerService\bin\Debug\CustomerService.exe
+C:\Users\Emil\Documents\Visual Studio 2013\Projects\FEI\ABAsimSimulationEngine\CustomerService\bin\Debug\CustomerService.pdb
+C:\Users\Emil\Documents\Visual Studio 2013\Projects\FEI\ABAsimSimulationEngine\CustomerService\bin\Debug\SimulationEngine.dll
+C:\Users\Emil\Documents\Visual Studio 2013\Projects\FEI\ABAsimSimulationEngine\CustomerService\bin\Debug\SimulationEngine.pdb
+C:\Users\Emil\Documents\Visual Studio 2013\Projects\FEI\ABAsimSimulationEngine\CustomerService\obj\Debug\CustomerService.exe
+C:\Users\Emil\Documents\Visual Studio 2013\Projects\FEI\ABAsimSimulationEngine\CustomerService\obj\Debug\CustomerService.pdb
+C:\Users\Emil\Documents\Visual Studio 2013\Projects\FEI\ABAsimSimulationEngine\CustomerService\obj\Debug\GeneratedInternalTypeHelper.g.cs
+C:\Users\Emil\Documents\Visual Studio 2013\Projects\FEI\ABAsimSimulationEngine\CustomerService\obj\Debug\CustomerService_MarkupCompile.lref
