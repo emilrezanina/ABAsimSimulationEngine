@@ -1,11 +1,13 @@
 ﻿using SimulationEngine.Components;
 using SimulationEngine.Modules.DiscreteSimulationModule;
+using SimulationEngine.SimulatorWriter;
 
 namespace SimulationEngine.Modules.ConfigurationModule
 {
-    public class ControlAgent : AbstractAgent
+    public class ControlAgent : AbstractAgent 
     {
-        public ControlAgent(IReciveSendMessage agentCommunication) : base(agentCommunication)
+        public ControlAgent(IReciveSendMessage agentCommunication) 
+            : base(agentCommunication)
         {
             ControlModel = new AgentModel(this);
         }

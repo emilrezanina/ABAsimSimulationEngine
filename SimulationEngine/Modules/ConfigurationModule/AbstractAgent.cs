@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using SimulationEngine.Communication;
 using SimulationEngine.Components;
 using SimulationEngine.Modules.DiscreteSimulationModule;
+using SimulationEngine.SimulatorWriter;
 
 namespace SimulationEngine.Modules.ConfigurationModule
 {
@@ -13,6 +14,7 @@ namespace SimulationEngine.Modules.ConfigurationModule
         private readonly IDictionary<string, string[]> _mapOfOwnCodesMessages;
         private readonly Mailbox _mailbox;
         private readonly IReciveSendMessage _agentCommunication;
+        protected CommunicationOutputProvider MessageOutputProvider;
         //POUZE NA EVIDENCI
         private readonly IList<Message> _waitingOnResponseMessages;
 
@@ -36,6 +38,7 @@ namespace SimulationEngine.Modules.ConfigurationModule
             _manager = CreateManager();
             _mailbox = new Mailbox();
             _agentCommunication = agentCommunication;
+            MessageOutputProvider = agentCommunication.MessageOutputProvider;
             _waitingOnResponseMessages = new List<Message>();
         }
 
@@ -108,6 +111,7 @@ namespace SimulationEngine.Modules.ConfigurationModule
             while (_mailbox.MessageCount != 0)
             {
                 var message = _mailbox.RemoveMessage();
+                MessageOutputProvider.TraceReceivedMessage(message);
                 var component = GetComponent(message.Addressee);
                 if (component != null)
                 {

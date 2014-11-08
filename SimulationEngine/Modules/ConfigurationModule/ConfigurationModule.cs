@@ -8,17 +8,16 @@ namespace SimulationEngine.Modules.ConfigurationModule
 {
     public class ConfigurationModule : IAttachedModule
     {
-        public ISimulationControl Control { get; private set; }
+        public ISimulationControl Control { get; set; }
 
         public IList<ControlAgent> Agents { get; private set; }
 
-        public ConfigurationModule(ISimulationControl control)
+        public ConfigurationModule()
         {
-            Control = control;
             Agents = new List<ControlAgent>();
         }
 
-        public void RegistrationAgent(ControlAgent agent)
+        public void RegistrationControlAgent(ControlAgent agent)
         {
             if (!Agents.Contains(agent))
             {
@@ -32,7 +31,7 @@ namespace SimulationEngine.Modules.ConfigurationModule
             //DODELAT ABY VLOZIL I MODEL POKUD NENI REGISTROVAN
         }
 
-        public ControlAgent CancellationAgent(ControlAgent agent)
+        public ControlAgent CancellationControlAgent(ControlAgent agent)
         {
             return Agents.Remove(agent) ? agent : null;
         }

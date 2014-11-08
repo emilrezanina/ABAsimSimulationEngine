@@ -1,28 +1,30 @@
 ﻿using System.Collections.Generic;
 using SimulationEngine.Components;
 using SimulationEngine.Modules.DiscreteSimulationModule;
+using SimulationEngine.SimulatorWriter;
 
 namespace SimulationEngine.Modules.ConfigurationModule
 {
     public class DynamicAgent : AbstractAgent
     {
-        private readonly Stack<ComponentName> _owners; 
-        public DynamicAgent(IReciveSendMessage agentCommunication) : base(agentCommunication)
+        private readonly Stack<string> _owners; 
+        public DynamicAgent(IReciveSendMessage agentCommunication) 
+            : base(agentCommunication)
         {
-            _owners = new Stack<ComponentName>();
+            _owners = new Stack<string>();
         }
 
-        public void AddOwner(ComponentName controlAgentName)
+        public void AddOwner(string controlAgentName)
         {
             _owners.Push(controlAgentName);
         }
 
-        public ComponentName RemoveLastOwner()
+        public string RemoveLastOwner()
         {
             return _owners.Pop();
         }
 
-        public ComponentName GetLastOwner()
+        public string GetLastOwner()
         {
             return _owners.Peek();
         }

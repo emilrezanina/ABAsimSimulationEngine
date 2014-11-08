@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using SimulationEngine.Components;
 using SimulationEngine.Modules.ConfigurationModule;
 
@@ -92,17 +94,22 @@ namespace SimulationEngine.Communication
 
         public override String ToString()
         {
-            return "Message{"
-                    + "typeMessage=" + Type
-                    + ", sender=" + Sender
-                    + ", addressee=" + Addressee
-                    + ", codeMessage=" + Code
-                    + ", data=" + DataParameters
-                    + ", timestamp=" + Timestamp
-                    + ", addressType=" + AddressType
-                    + ", answer=" + Answer
-                    //+ ", dynamicAgent=" + dynamicAgent.getManager().getComponentName()
-                    + '}';
+            var stringBuilder = new StringBuilder();
+            stringBuilder.Append(" Message{");
+            stringBuilder.Append("Timestamp: " + Timestamp);
+            stringBuilder.Append(", Type: " + Type);
+            stringBuilder.Append(", From: " + Sender);
+            stringBuilder.Append(", To: " + Addressee);
+            stringBuilder.Append(", Code: " + Code);
+            stringBuilder.Append(", Data: {");
+            if (!DataParameters.Any())
+                stringBuilder.Append("NULL");
+            foreach (var dataParameter in DataParameters)
+            {
+                stringBuilder.Append(dataParameter.Key + ' ');
+            }
+            stringBuilder.Append("};");
+            return stringBuilder.ToString();
         }
     }
 }

@@ -46,7 +46,6 @@
     <Compile Include="Components\DynamicManager.cs" />
     <Compile Include="Components\IComponent.cs" />
     <Compile Include="Communication\Mailbox.cs" />
-    <Compile Include="Components\ComponentName.cs" />
     <Compile Include="Communication\AdressType.cs" />
     <Compile Include="Communication\Message.cs" />
     <Compile Include="Communication\TypeMessage.cs" />
@@ -67,6 +66,7 @@
     <Compile Include="SimulationKernel\ISimulationKernel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SimulationKernel\SimulationKernel.cs" />
+    <Compile Include="SimulatorWriter\CommunicationOutputProvider.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -16,3 +16,13 @@ C:\Users\Emil\Documents\Visual Studio 2013\Projects\FEI\ABAsimSimulationEngine\T
 C:\Users\Emil\Documents\Visual Studio 2013\Projects\FEI\ABAsimSimulationEngine\TestingProject\obj\Debug\TestingProject.csprojResolveAssemblyReference.cache
 C:\Users\Emil\Documents\Visual Studio 2013\Projects\FEI\ABAsimSimulationEngine\TestingProject\bin\Debug\CustomerService.exe
 C:\Users\Emil\Documents\Visual Studio 2013\Projects\FEI\ABAsimSimulationEngine\TestingProject\bin\Debug\CustomerService.pdb
+C:\Users\Emil\Documents\GitHub\ABAsimSimulationEngine\TestingProject\obj\Debug\TestingProject.csprojResolveAssemblyReference.cache
+C:\Users\Emil\Documents\GitHub\ABAsimSimulationEngine\TestingProject\obj\Debug\TestingProject.exe
+C:\Users\Emil\Documents\GitHub\ABAsimSimulationEngine\TestingProject\bin\Debug\TestingProject.exe.config
+C:\Users\Emil\Documents\GitHub\ABAsimSimulationEngine\TestingProject\bin\Debug\TestingProject.exe
+C:\Users\Emil\Documents\GitHub\ABAsimSimulationEngine\TestingProject\bin\Debug\TestingProject.pdb
+C:\Users\Emil\Documents\GitHub\ABAsimSimulationEngine\TestingProject\bin\Debug\CustomerService.exe
+C:\Users\Emil\Documents\GitHub\ABAsimSimulationEngine\TestingProject\bin\Debug\SimulationEngine.dll
+C:\Users\Emil\Documents\GitHub\ABAsimSimulationEngine\TestingProject\bin\Debug\CustomerService.pdb
+C:\Users\Emil\Documents\GitHub\ABAsimSimulationEngine\TestingProject\bin\Debug\SimulationEngine.pdb
+C:\Users\Emil\Documents\GitHub\ABAsimSimulationEngine\TestingProject\obj\Debug\TestingProject.pdb

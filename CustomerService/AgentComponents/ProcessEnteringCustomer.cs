@@ -20,11 +20,14 @@ namespace CustomerService.AgentComponents
         public override void ProcessTheMessage(Message message)
         {
             Message msgHold;
+            object customer;
             switch (message.Type)
             {
                 case TypeMessage.Start:
                     _endTime = (int)message.DataParameters[ParameterNameManager.EndTime];
-                    msgHold = new Message(TypeMessage.Hold, Name, Name, null, null, message.Timestamp + 1); //endtime tady nema byt
+                    customer = _model.VygenerujZakaznika();
+                    msgHold = new Message(TypeMessage.Hold, Name, Name, null, null, message.Timestamp + 1);
+                    msgHold.AddDataParameter(ParameterNameManager.Customer, customer);
                     SendHoldMessage(msgHold);
                     break;
                 case TypeMessage.Hold:
@@ -38,11 +41,13 @@ namespace CustomerService.AgentComponents
                             msgManager = new Message(TypeMessage.Finish, Name, ControlAgent.Manager.Name, null);
                             SendFinishMessage(msgManager);
                         }
+                        customer = _model.VygenerujZakaznika();
                         msgHold = new Message(TypeMessage.Hold, Name, Name, null, null, nextArrivalTime);
+                        msgHold.AddDataParameter(ParameterNameManager.Customer, customer);
                         SendHoldMessage(msgHold);
-                        object customer = _model.VygenerujZakaznika();
-                        msgManager = new Message(TypeMessage.Notice, Name, ControlAgent.Manager.Name, MessageCodeManager.IncomingCustomer);
-                        msgManager.AddDataParameter(ParameterNameManager.Customer, customer);
+                        
+                        msgManager = new Message(TypeMessage.Notice, Name, ControlAgent.Manager.Name, 
+                            MessageCodeManager.IncomingCustomer, message.DataParameters, message.Timestamp);
                         SendNoticeMessage(msgManager);
                     }
                     break;

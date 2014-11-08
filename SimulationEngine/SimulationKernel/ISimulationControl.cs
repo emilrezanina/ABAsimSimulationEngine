@@ -2,15 +2,17 @@
 using SimulationEngine.Modules.ConfigurationModule;
 using SimulationEngine.Modules.ContinuousSimulationModule;
 using SimulationEngine.Modules.DiscreteSimulationModule;
+using SimulationEngine.SimulatorWriter;
 
 namespace SimulationEngine.SimulationKernel
 {
     public interface ISimulationControl
     {
-        DiscreteSimulationModule DiscreteSimulation { get; }
-        ContinuousSimulationModule ContinuousSimulation { get; }
-        AnimationModule Animation { get; }
-        ConfigurationModule Configuration { get; }
+        DiscreteSimulationModule DiscreteSimulation { get; set; }
+        ContinuousSimulationModule ContinuousSimulation { get; set; }
+        AnimationModule Animation { get; set; }
+        ConfigurationModule Configuration { get; set; }
+        CommunicationOutputProvider MessageOutputProvider { get;} 
 
         long ActualTime { get; set; }
         short Speed { get; set; }

@@ -3,19 +3,23 @@ using System.Threading;
 using SimulationEngine.Communication;
 using SimulationEngine.Modules.ConfigurationModule;
 using SimulationEngine.SimulationKernel;
+using SimulationEngine.SimulatorWriter;
 
 namespace SimulationEngine.Modules.DiscreteSimulationModule
 {
     public class DiscreteSimulationModule : IAttachedModule, IReciveSendMessage
     {
         private readonly Mailbox _centralMailbox;
-        public ISimulationControl Control { get; private set; }
+        public ISimulationControl Control { get; set; }
 
-        public DiscreteSimulationModule(ISimulationControl control)
+        public CommunicationOutputProvider MessageOutputProvider
+        {
+            get { return Control.MessageOutputProvider; }
+        }
+        
+        public DiscreteSimulationModule()
         {
             _centralMailbox = new Mailbox();
-            Control = control;
-
         }
 
         public void Performance()
@@ -86,6 +90,7 @@ namespace SimulationEngine.Modules.DiscreteSimulationModule
             {
                 if (immediately)
                 {
+                    Control.MessageOutputProvider.TraceReceivedMessage(message);
                     addressee.ProcessTheMessage(message);
                 }
                 else

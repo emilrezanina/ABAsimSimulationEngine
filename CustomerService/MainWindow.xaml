@@ -206,10 +206,12 @@
                 Click="Stop_Click" Background="Black">
             <TextBlock FontWeight="Bold" Foreground="White" >Stop</TextBlock>
         </Button>
-
-        <TextBox Height="175" Margin="10,0,10,11" TextWrapping="Wrap" VerticalAlignment="Bottom" Background="Gray" TextDecorations="{x:Null}" BorderBrush="Black">
-            <TextBox.Text>TADY BUDE VYPIS ZPRAV KOMUNIKACE</TextBox.Text>
-        </TextBox>
+        <ScrollViewer Height="175" Margin="10,0,10,11"
+                      VerticalAlignment="Bottom">
+            <TextBlock Name="CommunicationOutput"  TextWrapping="Wrap" 
+                  Background="Gray" TextDecorations="{x:Null}" />
+        </ScrollViewer>
+        
         <Image Margin="220,74,536,465" Source="Arrow.png" Stretch="Fill"/>
         <Image Margin="445,74,311,465" Source="Arrow.png" Stretch="Fill"/>
         <Image Margin="220,195,536,344" Source="Arrow.png" Stretch="Fill"/>

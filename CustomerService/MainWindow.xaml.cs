@@ -1,20 +1,22 @@
-﻿using System.Collections.ObjectModel;
-using System.Collections.Specialized;
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Globalization;
+using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Data;
+using System.Windows.Threading;
 using CustomerService.AgentComponents;
 using CustomerService.Structures;
 using SimulationEngine.Communication;
 using SimulationEngine.Components;
 using SimulationEngine.Modules.ConfigurationModule;
+using SimulationEngine.Modules.DiscreteSimulationModule;
 using SimulationEngine.SimulationKernel;
+using SimulationEngine.SimulatorWriter;
 
 namespace CustomerService
 {
-    class Pokus : INotifyCollectionChanged
-    {
-
-        public event NotifyCollectionChangedEventHandler CollectionChanged;
-    }
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
@@ -95,6 +97,39 @@ namespace CustomerService
 
         public bool IsModelInicialized { get; private set; }
 
+        private class CommunicationOutputReciever : IObserver<Message>
+        {
+            private readonly TextBlock _communicationOutput;
+            private readonly Dispatcher _dispatcher;
+            public CommunicationOutputReciever(TextBlock communicationOutput, Dispatcher dispatcher)
+            {
+                _communicationOutput = communicationOutput;
+                _dispatcher = dispatcher;
+            }
+
+            public void OnNext(Message value)
+            {
+                _dispatcher.Invoke(
+                    () =>
+                    {
+                        var message = value.ToString();
+                        _communicationOutput.Text += message;
+                        _communicationOutput.Text += "\n";
+                    } );
+
+            }
+             
+            public void OnError(Exception error)
+            {
+                throw error;
+            }
+
+            public void OnCompleted()
+            {
+                
+            }
+        };
+
         public MainWindow()
         {
             DataContext = this;
@@ -108,8 +143,20 @@ namespace CustomerService
             BindingOperations.EnableCollectionSynchronization(OutgoingCustomers, _outgoingCustomersLock);
             BindingOperations.EnableCollectionSynchronization(ResourcesA, _resourcesALock);
             BindingOperations.EnableCollectionSynchronization(ResourcesB, _resourcesBLock);
-            _simulation = new SimulationKernel();
+
+            var discreteSimulationModule = new DiscreteSimulationModule();
+            var configurationModule = new ConfigurationModule();
+            var simulatorOutput = new CommunicationOutputProvider();
+            _simulation = new SimulationKernel(simulatorOutput)
+            {
+                DiscreteSimulation = discreteSimulationModule,
+                Configuration = configurationModule
+            };
+
             InitializeComponent();
+            DataContext = this;
+            var communicationOutputReciever = new CommunicationOutputReciever(CommunicationOutput, this.Dispatcher);
+            simulatorOutput.Subscribe(communicationOutputReciever);
         }
 
         private void InicializeSimulationModel()
@@ -121,7 +168,7 @@ namespace CustomerService
                 _simulation.DiscreteSimulation, model);
             var agentSurroundings = new ControlAgent(_simulation.DiscreteSimulation) { Manager = managerSurroundings };
             agentSurroundings.RegistrationComponent(processEnteringCustomer);
-            _simulation.Configuration.RegistrationAgent(agentSurroundings);
+            _simulation.Configuration.RegistrationControlAgent(agentSurroundings);
             agentSurroundings.RegistrationCodeMessage(MessageCodeManager.OutgoingCustomer, new[] { ParameterNameManager.Applicant });
 
             AgentManager managerService = new ManagerService(ComponentNameManager.AgentService);
@@ -138,7 +185,7 @@ namespace CustomerService
             agentService.RegistrationComponent(processServiceA);
             agentService.RegistrationComponent(processServiceB);
             agentService.RegistrationComponent(processCustomerOutgoing);
-            _simulation.Configuration.RegistrationAgent(agentService);
+            _simulation.Configuration.RegistrationControlAgent(agentService);
             agentService.RegistrationCodeMessage(MessageCodeManager.IncomingCustomer, new [] { ParameterNameManager.Customer });
             agentService.RegistrationCodeMessage(MessageCodeManager.DeliverResource, new[] { ParameterNameManager.Applicant });
 
@@ -163,7 +210,7 @@ namespace CustomerService
             agentResourceAdministrator.RegistrationComponent(actionReturnResource);
             agentResourceAdministrator.RegistrationComponent(queryIsQueueOfApplicantEmpty);
             agentResourceAdministrator.RegistrationComponent(actionRemoveApplicantFromQueue);
-            _simulation.Configuration.RegistrationAgent(agentResourceAdministrator);
+            _simulation.Configuration.RegistrationControlAgent(agentResourceAdministrator);
             agentResourceAdministrator.RegistrationCodeMessage(MessageCodeManager.DeliverResource, new[] { ParameterNameManager.Applicant });
             agentResourceAdministrator.RegistrationCodeMessage(MessageCodeManager.CompleteMoveResource, new[] { ParameterNameManager.Resource });
 

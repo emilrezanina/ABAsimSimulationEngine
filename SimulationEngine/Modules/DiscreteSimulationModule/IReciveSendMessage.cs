@@ -1,4 +1,5 @@
 ﻿using SimulationEngine.Communication;
+using SimulationEngine.SimulatorWriter;
 
 namespace SimulationEngine.Modules.DiscreteSimulationModule
 {
@@ -6,5 +7,6 @@ namespace SimulationEngine.Modules.DiscreteSimulationModule
     {
         void ReciveMessage(Message message);
         void SendMessage(Message message);
+        CommunicationOutputProvider MessageOutputProvider { get; }
     }
 }

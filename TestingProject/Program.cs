@@ -1,16 +1,26 @@
 ﻿using System;
 using SimulationEngine.Communication;
 using SimulationEngine.Modules.ConfigurationModule;
+using SimulationEngine.Modules.DiscreteSimulationModule;
 using SimulationEngine.SimulationKernel;
+using SimulationEngine.SimulatorWriter;
 using TestingProject.Structures;
 
 namespace TestingProject
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
-            var simKernel = new SimulationKernel();
+            var discreteSimulationModule = new DiscreteSimulationModule();
+            var configurationModule = new ConfigurationModule();
+            var simulatorOutput = new CommunicationOutputProvider();
+            var simKernel = new SimulationKernel(simulatorOutput)
+            {
+                DiscreteSimulation = discreteSimulationModule,
+                Configuration = configurationModule
+            };
+
             //Agent okoli
             var surroundingsManager = new ManagerSurroundings("mSurroundings");
             var generatorCustomersPersons = new ProcessGeneratorPersons("pGeneratorPersons", simKernel.DiscreteSimulation);
@@ -30,8 +40,8 @@ namespace TestingProject
             var serviceAAgent = new ControlAgent(simKernel.DiscreteSimulation) {Manager = serviceAManager};
             serviceAAgent.RegistrationCodeMessage("Start service A", new String[] { });
 
-            simKernel.Configuration.RegistrationAgent(surroundingsAgent);
-            simKernel.Configuration.RegistrationAgent(modelAgent);
+            simKernel.Configuration.RegistrationControlAgent(surroundingsAgent);
+            simKernel.Configuration.RegistrationControlAgent(modelAgent);
 
             var msg = new Message(TypeMessage.Notice,
                     null,
