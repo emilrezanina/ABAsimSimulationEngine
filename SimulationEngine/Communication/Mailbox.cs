@@ -19,11 +19,7 @@ namespace SimulationEngine.Communication
 
         public void AddMessage(Message message)
         {
-            if (!_mailbox.Add(message))
-            {
-                
-            }
-            
+            _mailbox.Add(message);
         }
 
         public Message RemoveMessage()
