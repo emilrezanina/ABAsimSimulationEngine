@@ -2,15 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using SimulationEngine.Components;
 using SimulationEngine.Modules.ConfigurationModule;
 
 namespace SimulationEngine.Communication
 {
-    
-
     public class Message
     {
+        public int SequenceNumberCreation { get; set; }
         public TypeMessage Type { get; set; }           //typ zpravy
         public string Sender { get; set; }      //odesilatel
         public string Addressee { get; set; }   //adresat
@@ -43,12 +41,12 @@ namespace SimulationEngine.Communication
             return deletedDataParameter;
         }
 
-        public Message(TypeMessage typeMessage, string sender, string addressee, 
-            string codeMessage, IDictionary<string, object> dataParameters, int timestamp)
+        public Message(TypeMessage type, string sender, string addressee,
+            string code, IDictionary<string, object> dataParameters, int timestamp)
         {
-            Type = typeMessage;
+            Type = type;
             Addressee = addressee;
-            Code = codeMessage;
+            Code = code;
             Sender = sender;
             DataParameters = dataParameters ?? new Dictionary<string, object>();
             Timestamp = timestamp;
@@ -56,26 +54,11 @@ namespace SimulationEngine.Communication
             //dynamicAgent = null;
         }
 
-        public Message(TypeMessage typeMessage, string sender, string addressee,
-            string codeMessage)
-        {
-            Type = typeMessage;
-            Addressee = addressee;
-            Code = codeMessage;
-            Sender = sender;
-            DataParameters = new Dictionary<string, object>();
-            AddressType = AddressType.Address;
-            //dynamicAgent = null;
-        }
-
         public static Message CreateAnsferMessage(Message message)
         {
-            var ansferMessage = new Message(TypeMessage.Response,
-                    message.Addressee,
-                    message.Sender,
-                    message.Code,
-                    message.DataParameters,
-                    message.Timestamp);
+            var ansferMessage = MessageProvider.CreateMessage(TypeMessage.Response,
+                    message.Addressee, message.Sender, message.Code,
+                    message.DataParameters, message.Timestamp);
             return ansferMessage;
         }
 
@@ -91,6 +74,21 @@ namespace SimulationEngine.Communication
             }
             return 0;
         }
+
+        public class MessageTimestampComparer : Comparer<Message>
+        {
+            public override int Compare(Message x, Message y)
+            {
+                if (x == null || y == null)
+                    throw new ArgumentNullException();
+
+                var compareValue = x.Timestamp.CompareTo(y.Timestamp);
+                if (compareValue == 0)
+                    compareValue = x.SequenceNumberCreation.CompareTo(y.SequenceNumberCreation);
+
+                return compareValue;
+            }
+        };
 
         public override String ToString()
         {

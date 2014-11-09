@@ -24,14 +24,14 @@ namespace CustomerService.AgentComponents
             switch (message.Type)
             {
                 case TypeMessage.Start:
-                    msg = new Message(TypeMessage.Hold, Name, Name,
+                    msg = MessageProvider.CreateMessage(TypeMessage.Hold, Name, Name,
                             null, message.DataParameters, message.Timestamp + 1);
                     SendHoldMessage(msg);
                     break;
                 case TypeMessage.Hold:
                     var zakaznik = (Customer)message.DataParameters[ParameterNameManager.Applicant];
                     _model.PremisteniZakaznikaZObsluhy(zakaznik);
-                    msg = new Message(TypeMessage.Finish, Name, ControlAgent.Manager.Name,
+                    msg = MessageProvider.CreateMessage(TypeMessage.Finish, Name, ControlAgent.Manager.Name,
                             MessageCodeManager.OutgoingCustomer, message.DataParameters, message.Timestamp);
                     SendFinishMessage(msg);
                     break;

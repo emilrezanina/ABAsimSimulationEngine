@@ -43,7 +43,7 @@ namespace TestingProject
             simKernel.Configuration.RegistrationControlAgent(surroundingsAgent);
             simKernel.Configuration.RegistrationControlAgent(modelAgent);
 
-            var msg = new Message(TypeMessage.Notice,
+            var msg = MessageProvider.CreateMessage(TypeMessage.Notice,
                     null,
                     "mSurroundings",
                     "Begin generation",

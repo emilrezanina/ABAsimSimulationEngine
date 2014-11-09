@@ -1,14 +1,15 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace SimulationEngine.Communication
 {
     public class Mailbox
     {
-        private readonly IList<Message> _mailbox;
+        private readonly SortedSet<Message> _mailbox; 
 
         public Mailbox()
         {
-            _mailbox = new List<Message>();
+            _mailbox = new SortedSet<Message>(new Message.MessageTimestampComparer());
         }
 
         public int MessageCount
@@ -18,13 +19,17 @@ namespace SimulationEngine.Communication
 
         public void AddMessage(Message message)
         {
-            _mailbox.Add(message);
+            if (!_mailbox.Add(message))
+            {
+                
+            }
+            
         }
 
         public Message RemoveMessage()
         {
-            var removedMessage = _mailbox[0];
-            _mailbox.RemoveAt(0);
+            var removedMessage = _mailbox.First();
+            _mailbox.Remove(removedMessage);
             return removedMessage;
         }
 
@@ -35,7 +40,7 @@ namespace SimulationEngine.Communication
 
         public Message GetEarliestMessage()
         {
-            return IsEmpty() ? null : _mailbox[0];
+            return IsEmpty() ? null : _mailbox.First();
         }
     }
 }

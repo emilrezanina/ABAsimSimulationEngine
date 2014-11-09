@@ -36,12 +36,13 @@ namespace TestingProject.Structures
                         return;
                     msg = CreateHoldMessage();
                     SendHoldMessage(msg);
-                    msg = new Message(TypeMessage.Notice,
-                            Name,
-                            ComponentNameManager.AgentSurroundings,
-                            "New arrival person",
-                            null,
-                            message.Timestamp) {DynamicAgent = message.DynamicAgent};
+                    msg = MessageProvider.CreateMessage(TypeMessage.Notice,
+                        Name,
+                        ComponentNameManager.AgentSurroundings,
+                        "New arrival person",
+                        null,
+                        message.Timestamp);
+                    msg.DynamicAgent = message.DynamicAgent;
                     SendNoticeMessage(msg);
                     break;
                 case TypeMessage.Break:
@@ -68,12 +69,13 @@ namespace TestingProject.Structures
         {
             var agentPerson = GetNextPerson();
             var newTimestamp = GetNextArrivalTime();
-            var msg = new Message(TypeMessage.Hold,
-                    Name,
-                    Name,
-                    null,
-                    null,
-                    newTimestamp) {DynamicAgent = agentPerson};
+            var msg = MessageProvider.CreateMessage(TypeMessage.Hold,
+                Name,
+                Name,
+                null,
+                null,
+                newTimestamp);
+            msg.DynamicAgent = agentPerson;
             return msg;
         }
     }

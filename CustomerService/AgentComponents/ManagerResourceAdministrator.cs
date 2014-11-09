@@ -37,7 +37,7 @@ namespace CustomerService.AgentComponents
             {
                 case MessageCodeManager.ReturnResource:
                     //p6 - uvolneni zdroje
-                    var msg = new Message(TypeMessage.Execute, Name, ComponentNameManager.ActionReturnResource, null,
+                    var msg = MessageProvider.CreateMessage(TypeMessage.Execute, Name, ComponentNameManager.ActionReturnResource, null,
                         message.DataParameters, message.Timestamp);
                     SendExecuteMessage(msg);
                     //p9 - je fronta na vraceny zdroj
@@ -46,7 +46,7 @@ namespace CustomerService.AgentComponents
                     //fronta neni prazdna
                     if (msg.Result.Equals(ResultNameManager.QueueIsntEmpty))
                     {
-                        msg = new Message(TypeMessage.Execute, Name, ComponentNameManager.ActionRemoveApplicantFromQueue, null,
+                        msg = MessageProvider.CreateMessage(TypeMessage.Execute, Name, ComponentNameManager.ActionRemoveApplicantFromQueue, null,
                             null, message.Timestamp);
                         SendExecuteMessage(msg);
                         //p8 - Prideleni zdroje zakaznikovi
@@ -58,14 +58,16 @@ namespace CustomerService.AgentComponents
                         //zdroj premistit
                         if (msg.Result.Equals(MessageCodeManager.MoveResource))
                         {
-                            msg = new Message(TypeMessage.Start, Name, ComponentNameManager.ProcessMoveResource, null,
+                            msg = MessageProvider.CreateMessage(TypeMessage.Start, Name, ComponentNameManager.ProcessMoveResource, null,
                                 msg.DataParameters, message.Timestamp);
                             SendStartMessage(msg);
                         } //zdroj nepremistnit
                         else
                         {
-                            msg = new Message(TypeMessage.Response, Name, ComponentNameManager.AgentService, MessageCodeManager.DeliverResource,
-                                msg.DataParameters, message.Timestamp) {Answer = message.Answer};
+                            msg = MessageProvider.CreateMessage(TypeMessage.Response, Name,
+                                ComponentNameManager.AgentService, MessageCodeManager.DeliverResource,
+                                msg.DataParameters, message.Timestamp);
+                            msg.Answer = message.Answer;
                             SendResponseMessage(msg);
                         }
                     }
@@ -79,8 +81,10 @@ namespace CustomerService.AgentComponents
             switch (message.Code)
             {
                 case MessageCodeManager.CompleteMoveResource:
-                    var msg = new Message(TypeMessage.Response, Name, ComponentNameManager.AgentService,
-                        MessageCodeManager.DeliverResource, message.DataParameters, message.Timestamp) {Answer = message.Answer};
+                    var msg = MessageProvider.CreateMessage(TypeMessage.Response, Name,
+                        ComponentNameManager.AgentService,
+                        MessageCodeManager.DeliverResource, message.DataParameters, message.Timestamp);
+                    msg.Answer = message.Answer;
                     SendResponseMessage(msg);
                     break;
             }
@@ -88,7 +92,7 @@ namespace CustomerService.AgentComponents
 
         private void ProcessRequestMessage(Message message)
         {
-            var msg = new Message(TypeMessage.Execute, Name, ComponentNameManager.AdvisorSelectionOffFreeResources, null,
+            var msg = MessageProvider.CreateMessage(TypeMessage.Execute, Name, ComponentNameManager.AdvisorSelectionOffFreeResources, null,
                 message.DataParameters, message.Timestamp);
             SendExecuteMessage(msg);
             //pridelit zdroj
@@ -103,14 +107,15 @@ namespace CustomerService.AgentComponents
                 //zdroj premistit
                 if (msg.Result.Equals(MessageCodeManager.MoveResource))
                 {
-                    msg = new Message(TypeMessage.Start, Name, ComponentNameManager.ProcessMoveResource,
+                    msg = MessageProvider.CreateMessage(TypeMessage.Start, Name, ComponentNameManager.ProcessMoveResource,
                         null, msg.DataParameters, message.Timestamp);
                     SendStartMessage(msg);
                 } //zdroj nepremistnit
                 else
                 {
-                    msg = new Message(TypeMessage.Response, Name, ComponentNameManager.AgentService,
-                        message.Code, msg.DataParameters, message.Timestamp) {Answer = message.Answer};
+                    msg = MessageProvider.CreateMessage(TypeMessage.Response, Name, ComponentNameManager.AgentService,
+                        message.Code, msg.DataParameters, message.Timestamp);
+                    msg.Answer = message.Answer;
                     SendResponseMessage(msg);
                 }
             } //nepridelit zdroj

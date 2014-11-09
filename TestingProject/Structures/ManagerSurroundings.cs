@@ -1,6 +1,7 @@
 ﻿using System;
 using SimulationEngine.Communication;
 using SimulationEngine.Components;
+using SimulationEngine.Modules.ConfigurationModule;
 
 namespace TestingProject.Structures
 {
@@ -19,7 +20,7 @@ namespace TestingProject.Structures
                     switch (message.Code)
                     {
                         case "Begin generation":
-                            msg = new Message(TypeMessage.Start,
+                            msg = MessageProvider.CreateMessage(TypeMessage.Start,
                                     Name,
                                     "pGeneratorPersons",
                                     message.Code,
@@ -28,7 +29,7 @@ namespace TestingProject.Structures
                             SendStartMessage(msg);
                             break;
                         case "End generation":
-                            msg = new Message(TypeMessage.Break,
+                            msg = MessageProvider.CreateMessage(TypeMessage.Break,
                                     Name,
                                     "pGeneratorPersons",
                                     message.Code,
@@ -38,12 +39,13 @@ namespace TestingProject.Structures
                             break;
                         case "New arrival person":
                             //1. Pridat noveho dynamickeho agenta do modelu agenta modelu
-                            msg = new Message(TypeMessage.Handover,
-                                    Name,
-                                    "mModel",
-                                    "New person",
-                                    null,
-                                    message.Timestamp) {DynamicAgent = message.DynamicAgent};
+                            msg = MessageProvider.CreateMessage(TypeMessage.Handover,
+                                Name,
+                                "mModel",
+                                "New person",
+                                null,
+                                message.Timestamp);
+                            msg.DynamicAgent = message.DynamicAgent;
                             SendHandoverMessage(msg);
                             break;
                         default:

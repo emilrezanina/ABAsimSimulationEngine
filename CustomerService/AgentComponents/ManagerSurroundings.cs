@@ -29,12 +29,12 @@ namespace CustomerService.AgentComponents
             switch (message.Code)
             {
                 case MessageCodeManager.StartSimulation:
-                    msg = new Message(TypeMessage.Start, Name, ComponentNameManager.ProcessEnteringCustomer, MessageCodeManager.OpenGate, null, message.Timestamp);
+                    msg = MessageProvider.CreateMessage(TypeMessage.Start, Name, ComponentNameManager.ProcessEnteringCustomer, MessageCodeManager.OpenGate, null, message.Timestamp);
                     msg.AddDataParameter(ParameterNameManager.EndTime, 5);
                     SendStartMessage(msg);
                     break;
                 case MessageCodeManager.IncomingCustomer:
-                    msg = new Message(TypeMessage.Notice, Name, ComponentNameManager.AgentService, MessageCodeManager.WaitingNewCustomer, null, message.Timestamp);
+                    msg = MessageProvider.CreateMessage(TypeMessage.Notice, Name, ComponentNameManager.AgentService, MessageCodeManager.WaitingNewCustomer, null, message.Timestamp);
                     msg.AddDataParameter(ParameterNameManager.Customer, message.DataParameters[ParameterNameManager.Customer]);
                     SendNoticeMessage(msg);
                     break;

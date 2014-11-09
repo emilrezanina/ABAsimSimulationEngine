@@ -18,12 +18,13 @@ namespace TestingProject.Structures
                     switch (message.Code)
                     {
                         case "New person":
-                            var msg = new Message(TypeMessage.Entrust,
+                            var msg = MessageProvider.CreateMessage(TypeMessage.Entrust,
                                 Name,
                                 "mServiceA",
                                 "Start service",
                                 null,
-                                message.Timestamp) {DynamicAgent = message.DynamicAgent};
+                                message.Timestamp);
+                            msg.DynamicAgent = message.DynamicAgent;
                             SendEntrustMessage(msg);
                             break;
                         default:

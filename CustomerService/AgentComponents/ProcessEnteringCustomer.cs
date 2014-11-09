@@ -26,7 +26,7 @@ namespace CustomerService.AgentComponents
                 case TypeMessage.Start:
                     _endTime = (int)message.DataParameters[ParameterNameManager.EndTime];
                     customer = _model.VygenerujZakaznika();
-                    msgHold = new Message(TypeMessage.Hold, Name, Name, null, null, message.Timestamp + 1);
+                    msgHold = MessageProvider.CreateMessage(TypeMessage.Hold, Name, Name, null, null, message.Timestamp + 1);
                     msgHold.AddDataParameter(ParameterNameManager.Customer, customer);
                     SendHoldMessage(msgHold);
                     break;
@@ -38,15 +38,16 @@ namespace CustomerService.AgentComponents
                         Message msgManager;
                         if (nextArrivalTime == _endTime)
                         {
-                            msgManager = new Message(TypeMessage.Finish, Name, ControlAgent.Manager.Name, null);
+                            msgManager = MessageProvider.CreateMessage(TypeMessage.Finish, Name, ControlAgent.Manager.Name, null, null,
+                                message.Timestamp);
                             SendFinishMessage(msgManager);
                         }
                         customer = _model.VygenerujZakaznika();
-                        msgHold = new Message(TypeMessage.Hold, Name, Name, null, null, nextArrivalTime);
+                        msgHold = MessageProvider.CreateMessage(TypeMessage.Hold, Name, Name, null, null, nextArrivalTime);
                         msgHold.AddDataParameter(ParameterNameManager.Customer, customer);
                         SendHoldMessage(msgHold);
-                        
-                        msgManager = new Message(TypeMessage.Notice, Name, ControlAgent.Manager.Name, 
+
+                        msgManager = MessageProvider.CreateMessage(TypeMessage.Notice, Name, ControlAgent.Manager.Name, 
                             MessageCodeManager.IncomingCustomer, message.DataParameters, message.Timestamp);
                         SendNoticeMessage(msgManager);
                     }

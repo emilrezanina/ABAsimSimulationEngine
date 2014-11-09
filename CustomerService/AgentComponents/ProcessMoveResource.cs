@@ -20,16 +20,14 @@ namespace CustomerService.AgentComponents
             switch (message.Type)
             {
                 case TypeMessage.Start:
-                    msg = new Message(TypeMessage.Hold, Name, Name, null, message.DataParameters,
+                    msg = MessageProvider.CreateMessage(TypeMessage.Hold, Name, Name, null, message.DataParameters,
                         message.Timestamp + 1);
                     SendHoldMessage(msg);
                     break;
                 case TypeMessage.Hold:
-                    msg = new Message(TypeMessage.Finish, Name, ControlAgent.Manager.Name,
-                            MessageCodeManager.CompleteMoveResource, message.DataParameters, message.Timestamp)
-                    {
-                        Answer = message.Answer
-                    };
+                    msg = MessageProvider.CreateMessage(TypeMessage.Finish, Name, ControlAgent.Manager.Name,
+                        MessageCodeManager.CompleteMoveResource, message.DataParameters, message.Timestamp);
+                    msg.Answer = message.Answer;
                     SendFinishMessage(msg);
                     break;
             }

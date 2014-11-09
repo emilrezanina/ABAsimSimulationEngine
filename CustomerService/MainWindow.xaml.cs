@@ -214,8 +214,9 @@ namespace CustomerService
             agentResourceAdministrator.RegistrationCodeMessage(MessageCodeManager.DeliverResource, new[] { ParameterNameManager.Applicant });
             agentResourceAdministrator.RegistrationCodeMessage(MessageCodeManager.CompleteMoveResource, new[] { ParameterNameManager.Resource });
 
-            var startMessage = new Message(TypeMessage.Notice, null, ComponentNameManager.AgentSurroundings,
-                MessageCodeManager.StartSimulation);
+            var startMessage = MessageProvider.CreateMessage(TypeMessage.Notice, null, 
+                ComponentNameManager.AgentSurroundings,
+                MessageCodeManager.StartSimulation, null, 0);
             _simulation.DiscreteSimulation.ReciveMessage(startMessage);
 
             IsModelInicialized = true;

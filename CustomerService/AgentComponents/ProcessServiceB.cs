@@ -23,14 +23,14 @@ namespace CustomerService.AgentComponents
                     var customer = (Customer) message.DataParameters[ParameterNameManager.Applicant];
                     var resourse = (ServiceResourse) message.DataParameters[ParameterNameManager.Resource];
                     _model.ZacniObsluhu(customer, resourse);
-                    msg = new Message(TypeMessage.Hold, Name, Name, null,
+                    msg = MessageProvider.CreateMessage(TypeMessage.Hold, Name, Name, null,
                         message.DataParameters, message.Timestamp + 3);
                     SendHoldMessage(msg);
                     break;
                 case TypeMessage.Hold:
                     _model.DokonciObsluhu((Customer) message.DataParameters[ParameterNameManager.Applicant],
                         (ServiceResourse) message.DataParameters[ParameterNameManager.Resource]);
-                    msg = new Message(TypeMessage.Finish, Name, ControlAgent.Manager.Name,
+                    msg = MessageProvider.CreateMessage(TypeMessage.Finish, Name, ControlAgent.Manager.Name,
                         MessageCodeManager.CompleteServiceB, message.DataParameters, message.Timestamp);
                     SendFinishMessage(msg);
                     break;
