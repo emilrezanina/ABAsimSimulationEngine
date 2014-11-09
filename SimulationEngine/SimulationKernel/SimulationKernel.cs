@@ -4,7 +4,7 @@ using SimulationEngine.Modules.AnimationModule;
 using SimulationEngine.Modules.ConfigurationModule;
 using SimulationEngine.Modules.ContinuousSimulationModule;
 using SimulationEngine.Modules.DiscreteSimulationModule;
-using SimulationEngine.SimulatorWriter;
+using SimulationEngine.SimulatorWriters;
 
 namespace SimulationEngine.SimulationKernel
 {
@@ -44,19 +44,28 @@ namespace SimulationEngine.SimulationKernel
                 _configuration.Control = this;
             }
         }
-        public CommunicationOutputProvider MessageOutputProvider { get; set; } 
+
+        public CommunicationOutputProvider MessageOutputProvider { get; set; }
+        public ActualTimeOutputProvider ActualTimeOutputProvider { get; set; }
 
         private Thread _performanceThread;
-        public long ActualTime { get; set; }
+        private long _actaulTime;
+        public long ActualTime
+        {
+            get { return _actaulTime; }
+            set
+            {
+                _actaulTime = value;
+                ActualTimeOutputProvider.ChangingActualTime(value);
+            }
+        }
         public short Speed { get; set; }
         public bool Waiting { get; set; }
 
-        public SimulationKernel(CommunicationOutputProvider messageOutputProvider)
+        public SimulationKernel()
         {
-            MessageOutputProvider = messageOutputProvider;
             _performanceThread = null;
             Waiting = false;
-            ActualTime = 0;
             Speed = 1000;
         }
 

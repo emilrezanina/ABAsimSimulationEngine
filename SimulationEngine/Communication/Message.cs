@@ -13,7 +13,7 @@ namespace SimulationEngine.Communication
         public string Sender { get; set; }      //odesilatel
         public string Addressee { get; set; }   //adresat
         public string Code { get; set; }               //kod zpravy
-        public int Timestamp { get; set; }             //cas doruceni, casove razitko
+        public long Timestamp { get; set; }             //cas doruceni, casove razitko
         public AddressType AddressType { get; set; }   //typ adresovani
         public Message Answer { get; set; }            //odpoved na zpravu - pro request
         public string Result { get; set; }             //vysledek
@@ -42,7 +42,7 @@ namespace SimulationEngine.Communication
         }
 
         public Message(TypeMessage type, string sender, string addressee,
-            string code, IDictionary<string, object> dataParameters, int timestamp)
+            string code, IDictionary<string, object> dataParameters, long timestamp)
         {
             Type = type;
             Addressee = addressee;

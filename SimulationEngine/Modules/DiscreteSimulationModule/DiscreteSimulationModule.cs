@@ -3,7 +3,7 @@ using System.Threading;
 using SimulationEngine.Communication;
 using SimulationEngine.Modules.ConfigurationModule;
 using SimulationEngine.SimulationKernel;
-using SimulationEngine.SimulatorWriter;
+using SimulationEngine.SimulatorWriters;
 
 namespace SimulationEngine.Modules.DiscreteSimulationModule
 {

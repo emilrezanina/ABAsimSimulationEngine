@@ -2,7 +2,7 @@
 using SimulationEngine.Modules.ConfigurationModule;
 using SimulationEngine.Modules.ContinuousSimulationModule;
 using SimulationEngine.Modules.DiscreteSimulationModule;
-using SimulationEngine.SimulatorWriter;
+using SimulationEngine.SimulatorWriters;
 
 namespace SimulationEngine.SimulationKernel
 {
@@ -12,7 +12,8 @@ namespace SimulationEngine.SimulationKernel
         ContinuousSimulationModule ContinuousSimulation { get; set; }
         AnimationModule Animation { get; set; }
         ConfigurationModule Configuration { get; set; }
-        CommunicationOutputProvider MessageOutputProvider { get;} 
+        CommunicationOutputProvider MessageOutputProvider { get; }
+        ActualTimeOutputProvider ActualTimeOutputProvider { get; }
 
         long ActualTime { get; set; }
         short Speed { get; set; }

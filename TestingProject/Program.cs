@@ -3,7 +3,7 @@ using SimulationEngine.Communication;
 using SimulationEngine.Modules.ConfigurationModule;
 using SimulationEngine.Modules.DiscreteSimulationModule;
 using SimulationEngine.SimulationKernel;
-using SimulationEngine.SimulatorWriter;
+using SimulationEngine.SimulatorWriters;
 using TestingProject.Structures;
 
 namespace TestingProject

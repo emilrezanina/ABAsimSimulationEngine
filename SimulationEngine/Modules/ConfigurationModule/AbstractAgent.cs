@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using SimulationEngine.Communication;
 using SimulationEngine.Components;
 using SimulationEngine.Modules.DiscreteSimulationModule;
-using SimulationEngine.SimulatorWriter;
+using SimulationEngine.SimulatorWriters;
 
 namespace SimulationEngine.Modules.ConfigurationModule
 {

@@ -1,6 +1,5 @@
 ﻿using SimulationEngine.Components;
 using SimulationEngine.Modules.DiscreteSimulationModule;
-using SimulationEngine.SimulatorWriter;
 
 namespace SimulationEngine.Modules.ConfigurationModule
 {

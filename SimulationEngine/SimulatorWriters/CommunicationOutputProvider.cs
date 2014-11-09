@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using SimulationEngine.Communication;
 
-namespace SimulationEngine.SimulatorWriter
+namespace SimulationEngine.SimulatorWriters
 {
     public class CommunicationOutputProvider : IObservable<Message>
     {

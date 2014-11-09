@@ -1,21 +1,17 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using System.Collections.Specialized;
-using System.ComponentModel;
-using System.Reflection;
-using System.Runtime.CompilerServices;
+using System.Globalization;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Threading;
 using CustomerService.AgentComponents;
-using CustomerService.Annotations;
 using CustomerService.Structures;
 using SimulationEngine.Communication;
 using SimulationEngine.Components;
 using SimulationEngine.Modules.ConfigurationModule;
 using SimulationEngine.Modules.DiscreteSimulationModule;
 using SimulationEngine.SimulationKernel;
-using SimulationEngine.SimulatorWriter;
+using SimulationEngine.SimulatorWriters;
 using IComponent = SimulationEngine.Components.IComponent;
 
 namespace CustomerService
@@ -132,6 +128,35 @@ namespace CustomerService
                 
             }
         };
+        private class ActualTimeOutputReciever : IObserver<long>
+        {
+            private readonly TextBlock _actuaTimeOutput;
+            private readonly Dispatcher _dispatcher;
+            public ActualTimeOutputReciever(TextBlock actuaTimeOutput, Dispatcher dispatcher)
+            {
+                _actuaTimeOutput = actuaTimeOutput;
+                _dispatcher = dispatcher;
+            }
+
+            public void OnNext(long value)
+            {
+                _dispatcher.Invoke(
+                    () =>
+                    {
+                        _actuaTimeOutput.Text = value.ToString(CultureInfo.InvariantCulture);
+                    });
+
+            }
+
+            public void OnError(Exception error)
+            {
+                throw error;
+            }
+            public void OnCompleted()
+            {
+
+            }
+        };
 
         public MainWindow()
         {
@@ -149,17 +174,22 @@ namespace CustomerService
 
             var discreteSimulationModule = new DiscreteSimulationModule();
             var configurationModule = new ConfigurationModule();
-            var simulatorOutput = new CommunicationOutputProvider();
-            _simulation = new SimulationKernel(simulatorOutput)
+            var communicationOutputProvider = new CommunicationOutputProvider();
+            var actualTimeOutputProvider = new ActualTimeOutputProvider();
+            _simulation = new SimulationKernel
             {
                 DiscreteSimulation = discreteSimulationModule,
-                Configuration = configurationModule
+                Configuration = configurationModule,
+                ActualTimeOutputProvider = actualTimeOutputProvider,
+                MessageOutputProvider = communicationOutputProvider
             };
 
             InitializeComponent();
             DataContext = this;
-            var communicationOutputReciever = new CommunicationOutputReciever(CommunicationOutput, this.Dispatcher);
-            simulatorOutput.Subscribe(communicationOutputReciever);
+            var communicationOutputReciever = new CommunicationOutputReciever(CommunicationOutput, Dispatcher);
+            var actualTimeOutputReciever = new ActualTimeOutputReciever(ActualTimeTextBlock, Dispatcher);
+            communicationOutputProvider.Subscribe(communicationOutputReciever);
+            actualTimeOutputProvider.Subscribe(actualTimeOutputReciever);
         }
 
         private void InicializeSimulationModel()
