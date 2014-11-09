@@ -5,7 +5,7 @@
         xmlns:my="clr-namespace:CustomerService.Structures"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d"
-        Title="Customer service" Height="600" Width="800" Background="White">
+        Title="Customer service" Height="600" Width="800" Background="White" ResizeMode="CanMinimize">
     <Window.Resources>
         <Style x:Key="CustomerButton" TargetType="Button">
             <Setter Property="Height" Value="25" />
@@ -57,7 +57,7 @@
             HorizontalAlignment="Left" VerticalAlignment="Top" 
             Margin="50,40,0,0">
             <Label Style="{StaticResource QueueLabel}" FontWeight="Bold">Příchozí zákazníci</Label>
-            <ItemsControl ItemsSource="{Binding IncomingCustomers}" BorderThickness="1" BorderBrush="Black" Height="50">
+            <ItemsControl BorderThickness="1" BorderBrush="Black" Height="50">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <DockPanel Style="{StaticResource PanelQueueCustomer}" />
@@ -189,8 +189,7 @@
             <Border BorderThickness="2" BorderBrush="Black">
                 <StackPanel>
                     <TextBlock TextWrapping="Wrap" FontSize="12" FontWeight="Bold" Background="Gray">Čas simulace:</TextBlock>
-                    <TextBlock x:Name="ActualTimeTextBlock" TextWrapping="Wrap" FontSize="20" TextAlignment="Center"
-                               Text="{Binding Time, ElementName=ThisWindow}">
+                    <TextBlock x:Name="ActualTimeTextBlock" TextWrapping="Wrap" FontSize="20" TextAlignment="Center">
                     </TextBlock>
                 </StackPanel>
             </Border>
@@ -206,12 +205,14 @@
                 Click="Stop_Click" Background="Black">
             <TextBlock FontWeight="Bold" Foreground="White" >Stop</TextBlock>
         </Button>
-        <ScrollViewer Height="175" Margin="10,0,10,11"
-                      VerticalAlignment="Bottom">
-            <TextBlock Name="CommunicationOutput"  TextWrapping="Wrap" 
-                  Background="Gray" TextDecorations="{x:Null}" />
-        </ScrollViewer>
-        
+        <Border Height="175" Margin="10,0,10,11"
+                    VerticalAlignment="Bottom" BorderBrush="Black" BorderThickness="1">
+            <ScrollViewer >
+                <TextBlock Name="CommunicationOutput"  TextWrapping="Wrap" 
+                  Background="Gray" TextDecorations="{x:Null}" OpacityMask="#BD000000" />
+            </ScrollViewer>
+        </Border>
+
         <Image Margin="220,74,536,465" Source="Arrow.png" Stretch="Fill"/>
         <Image Margin="445,74,311,465" Source="Arrow.png" Stretch="Fill"/>
         <Image Margin="220,195,536,344" Source="Arrow.png" Stretch="Fill"/>

@@ -71,6 +71,7 @@
     <Compile Include="AgentComponents\QueryChoosingServiceType.cs" />
     <Compile Include="AgentComponents\QueryIsQueueOfApplicantEmpty.cs" />
     <Compile Include="AgentComponents\QueryNeedMoveResource.cs" />
+    <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Structures\Customer.cs" />
     <Compile Include="Structures\CustomersGenerator.cs" />
     <Compile Include="AgentComponents\MessageCodeManager.cs" />

@@ -1,12 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Globalization;
-using System.Windows;
+using System.Collections.Specialized;
+using System.ComponentModel;
+using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Threading;
 using CustomerService.AgentComponents;
+using CustomerService.Annotations;
 using CustomerService.Structures;
 using SimulationEngine.Communication;
 using SimulationEngine.Components;
@@ -14,6 +16,7 @@ using SimulationEngine.Modules.ConfigurationModule;
 using SimulationEngine.Modules.DiscreteSimulationModule;
 using SimulationEngine.SimulationKernel;
 using SimulationEngine.SimulatorWriter;
+using IComponent = SimulationEngine.Components.IComponent;
 
 namespace CustomerService
 {

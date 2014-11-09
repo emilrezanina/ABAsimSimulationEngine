@@ -10,6 +10,6 @@ C:\Users\Emil\Documents\Visual Studio 2013\Projects\FEI\ABAsimSimulationEngine\S
 C:\Users\Emil\Documents\Visual Studio 2013\Projects\FEI\ABAsimSimulationEngine\SimulationEngine\obj\Debug\SimulationEngine.pdb
 C:\Users\Emil\Documents\GitHub\ABAsimSimulationEngine\SimulationEngine\bin\Debug\SimulationEngine.dll
 C:\Users\Emil\Documents\GitHub\ABAsimSimulationEngine\SimulationEngine\bin\Debug\SimulationEngine.pdb
-C:\Users\Emil\Documents\GitHub\ABAsimSimulationEngine\SimulationEngine\obj\Debug\SimulationEngine.csprojResolveAssemblyReference.cache
 C:\Users\Emil\Documents\GitHub\ABAsimSimulationEngine\SimulationEngine\obj\Debug\SimulationEngine.dll
 C:\Users\Emil\Documents\GitHub\ABAsimSimulationEngine\SimulationEngine\obj\Debug\SimulationEngine.pdb
+C:\Users\Emil\Documents\GitHub\ABAsimSimulationEngine\SimulationEngine\obj\Debug\SimulationEngine.csprojResolveAssemblyReference.cache
