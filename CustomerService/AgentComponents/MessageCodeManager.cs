@@ -24,6 +24,7 @@ namespace CustomerService.AgentComponents
     {
         public const string Applicant = "Applicant";
         public const string Resource = "Resource";
+        public const string ResourceType = "ResourceType";
         public const string Customer = "Customer";
         public const string EndTime = "End time";
     }

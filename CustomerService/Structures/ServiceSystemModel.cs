@@ -143,15 +143,16 @@ namespace CustomerService.Structures
             _zdrojCekajiciNaPrideleni = resource;
         }
 
-        public Customer VratZakaznikaCekajicihoVeFronte()
+        public Customer VratZakaznikaCekajicihoVeFronte(ServiceResourse.EServiceResourseType typeResource)
         {
-            Customer customer;
-            if (_gui.CustomersWaitingOnServiceA.Any())
+            Customer customer = null;
+            if(typeResource == ServiceResourse.EServiceResourseType.A)
+            //if (_gui.CustomersWaitingOnServiceA.Any())
             {
                 customer = _gui.CustomersWaitingOnServiceA[0];
                 _gui.CustomersWaitingOnServiceA.RemoveAt(0);
             }
-            else
+            if (typeResource == ServiceResourse.EServiceResourseType.B)
             {
                 customer = _gui.CustomersWaitingOnServiceB[0];
                 _gui.CustomersWaitingOnServiceB.RemoveAt(0);

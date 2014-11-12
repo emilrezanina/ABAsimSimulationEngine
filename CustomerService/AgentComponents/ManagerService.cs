@@ -49,11 +49,12 @@ namespace CustomerService.AgentComponents
             switch (message.Code)
             {
                 case MessageCodeManager.CompleteMoveCustomerToServiceA:
-                    //vraceni zdroje z obsluhy A
+                    
                     msg = MessageProvider.CreateMessage(TypeMessage.Request, Name,
                         ComponentNameManager.AgentResourceAdministrator, MessageCodeManager.DeliverResource, message.DataParameters, message.Timestamp);
                     SendRequestMessage(msg);
                     break;
+                    //vraceni zdroje z obsluhy A
                 case MessageCodeManager.CompleteServiceA:
                     msg = MessageProvider.CreateMessage(TypeMessage.Notice, Name, ComponentNameManager.AgentResourceAdministrator, MessageCodeManager.ReturnResource,
                         null, message.Timestamp);

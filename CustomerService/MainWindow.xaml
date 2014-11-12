@@ -57,7 +57,7 @@
             HorizontalAlignment="Left" VerticalAlignment="Top" 
             Margin="50,40,0,0">
             <Label Style="{StaticResource QueueLabel}" FontWeight="Bold">Příchozí zákazníci</Label>
-            <ItemsControl BorderThickness="1" BorderBrush="Black" Height="50">
+            <ItemsControl ItemsSource="{Binding IncomingCustomers}" BorderThickness="1" BorderBrush="Black" Height="50">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <DockPanel Style="{StaticResource PanelQueueCustomer}" />

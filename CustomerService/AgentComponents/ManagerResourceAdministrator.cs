@@ -46,9 +46,12 @@ namespace CustomerService.AgentComponents
                     //fronta neni prazdna
                     if (msg.Result.Equals(ResultNameManager.QueueIsntEmpty))
                     {
+                        //DODELAT PARAMETR RIKAJICI O JAKOU FRONTU SE JEDNA
                         msg = MessageProvider.CreateMessage(TypeMessage.Execute, Name, ComponentNameManager.ActionRemoveApplicantFromQueue, null,
                             null, message.Timestamp);
+                        msg.AddDataParameter(ParameterNameManager.Resource, message.DataParameters[ParameterNameManager.Resource]);
                         SendExecuteMessage(msg);
+                        msg.DeleteDataParameter(ParameterNameManager.Resource);
                         //p8 - Prideleni zdroje zakaznikovi
                         msg.Addressee = ComponentNameManager.ActionAssignResource;
                         SendExecuteMessage(msg);

@@ -15,10 +15,11 @@ namespace TestingProject
             var discreteSimulationModule = new DiscreteSimulationModule();
             var configurationModule = new ConfigurationModule();
             var simulatorOutput = new CommunicationOutputProvider();
-            var simKernel = new SimulationKernel(simulatorOutput)
+            
+            var simKernel = new SimulationKernel()
             {
                 DiscreteSimulation = discreteSimulationModule,
-                Configuration = configurationModule
+                Configuration = configurationModule,
             };
 
             //Agent okoli
