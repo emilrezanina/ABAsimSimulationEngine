@@ -1,5 +1,4 @@
-﻿using CustomerService.Structures;
-using SimulationEngine.Communication;
+﻿using SimulationEngine.Communication;
 using SimulationEngine.Components;
 using SimulationEngine.Modules.DiscreteSimulationModule;
 
@@ -7,11 +6,8 @@ namespace CustomerService.AgentComponents
 {
     class ProcessMoveResource : ContinuousAssistant
     {
-        private readonly ServiceSystemModel _model;
-
-        public ProcessMoveResource(string componentName, IReciveSendMessage holdTarget, ServiceSystemModel model) : base(componentName, holdTarget)
+        public ProcessMoveResource(string componentName, IReciveSendMessage holdTarget) : base(componentName, holdTarget)
         {
-            _model = model;
         }
 
         public override void ProcessTheMessage(Message message)

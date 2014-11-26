@@ -223,10 +223,10 @@ namespace CustomerService
             agentService.RegistrationCodeMessage(MessageCodeManager.DeliverResource, new[] { ParameterNameManager.Applicant });
 
             var managerResourceAdministrator = new ManagerResourceAdministrator(ComponentNameManager.AgentResourceAdministrator);
-            var processMoveResource = new ProcessMoveResource(ComponentNameManager.ProcessMoveResource, _simulation.DiscreteSimulation, model);
+            var processMoveResource = new ProcessMoveResource(ComponentNameManager.ProcessMoveResource, _simulation.DiscreteSimulation);
             var advisorSelectionOfFreeResources = new AdvisorSelectionOfFreeResources(ComponentNameManager.AdvisorSelectionOffFreeResources, model);
             var actionAssignResource = new ActionAssignResource(ComponentNameManager.ActionAssignResource, model);
-            var queryNeedMoveResource = new QueryNeedMoveResource(ComponentNameManager.QueryNeedMoveResource, model);
+            var queryNeedMoveResource = new QueryNeedMoveResource(ComponentNameManager.QueryNeedMoveResource);
             var actionPutApplicantToQueueOnResource = new ActionPutApplicantToQueueOnResource(ComponentNameManager.ActionPutApplicantToQueueOnResource, model);
             var actionReturnResource = new ActionReturnResource(ComponentNameManager.ActionReturnResource, model);
             var queryIsQueueOfApplicantEmpty = new QueryIsQueueOfApplicantEmpty(ComponentNameManager.QueryIsQueueOfApplicantEmpty, model);

@@ -6,11 +6,8 @@ namespace CustomerService.AgentComponents
 {
     class QueryNeedMoveResource : AbstractComponent
     {
-        private readonly ServiceSystemModel _model;
-
-        public QueryNeedMoveResource(string componentName, ServiceSystemModel model) : base(componentName)
+        public QueryNeedMoveResource(string componentName) : base(componentName)
         {
-            _model = model;
         }
 
         public override void ProcessTheMessage(Message message)

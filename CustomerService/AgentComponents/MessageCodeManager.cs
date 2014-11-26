@@ -1,6 +1,4 @@
-﻿using System.Runtime.Serialization;
-
-namespace CustomerService.AgentComponents
+﻿namespace CustomerService.AgentComponents
 {
     public struct MessageCodeManager
     {

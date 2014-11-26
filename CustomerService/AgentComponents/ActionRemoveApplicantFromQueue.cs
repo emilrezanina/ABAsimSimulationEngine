@@ -1,5 +1,4 @@
-﻿using System;
-using CustomerService.Structures;
+﻿using CustomerService.Structures;
 using SimulationEngine.Communication;
 using SimulationEngine.Components;
 
