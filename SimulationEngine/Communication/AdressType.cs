@@ -2,8 +2,8 @@
 {
     public enum AddressType
     {
-        Address,            //adresni
-        PartialyAddress,    //castecne adresni
-        NoAddress           //neadresni
+        Addressed,            //adresni
+        PartiallyAddressed,    //castecne adresni
+        Unaddressed           //neadresni
     }
 }

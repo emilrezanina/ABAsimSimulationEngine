@@ -11,7 +11,7 @@ namespace SimulationEngine.Modules.ConfigurationModule
     {
         public AgentModel ControlModel { get; protected set; }
         private readonly IList<IComponent> _components;
-        private readonly IDictionary<string, string[]> _mapOfOwnCodesMessages;
+        private readonly IDictionary<string, string[]> _mapOfOwnMessageCodes;
         private readonly Mailbox _mailbox;
         private readonly IReciveSendMessage _agentCommunication;
         protected CommunicationOutputProvider MessageOutputProvider;
@@ -34,7 +34,7 @@ namespace SimulationEngine.Modules.ConfigurationModule
             //NENI DODELANY CONTROLMODEL
             ControlModel = null;
             _components = new List<IComponent>();
-            _mapOfOwnCodesMessages = new Dictionary<string, string[]>();
+            _mapOfOwnMessageCodes = new Dictionary<string, string[]>();
             _manager = CreateManager();
             _mailbox = new Mailbox();
             _agentCommunication = agentCommunication;
@@ -82,17 +82,17 @@ namespace SimulationEngine.Modules.ConfigurationModule
 
         public void RegistrationCodeMessage(string codeMessage, params string[] attributes)
         {
-            _mapOfOwnCodesMessages.Add(codeMessage, attributes);
+            _mapOfOwnMessageCodes.Add(codeMessage, attributes);
         }
 
         public string CancellingCodeMessage(string codeMessage)
         {
-            return _mapOfOwnCodesMessages.Remove(codeMessage) ? codeMessage : null;
+            return _mapOfOwnMessageCodes.Remove(codeMessage) ? codeMessage : null;
         }
 
         public bool HasCodeMessage(string codeMessage)
         {
-            return _mapOfOwnCodesMessages.ContainsKey(codeMessage);
+            return _mapOfOwnMessageCodes.ContainsKey(codeMessage);
         }
 
         public void ReciveMessage(Message message)
@@ -133,11 +133,11 @@ namespace SimulationEngine.Modules.ConfigurationModule
             switch (message.AddressType)
             {
                 //a) jestli se jedna o adresni zpravu
-                case AddressType.Address: SendAdressMessage(message); break;
+                case AddressType.Addressed: SendAdressMessage(message); break;
                 //b) jestli se jedna o castne adresni zpravu
-                case AddressType.PartialyAddress: SendPartialyAdressMessage(message); break;
+                case AddressType.PartiallyAddressed: SendPartialyAdressMessage(message); break;
                 //c) jestli se jedna o neadresni zpravu
-                case AddressType.NoAddress: SendNoAdressMessage(message); break;
+                case AddressType.Unaddressed: SendNoAdressMessage(message); break;
                 default:
                     throw new Exception();
             }
@@ -147,7 +147,7 @@ namespace SimulationEngine.Modules.ConfigurationModule
         {
             {
                 //ziskani potrebnych atributu pro nalezeni spravneho requestu
-                var attributes = _mapOfOwnCodesMessages[message.Code];
+                var attributes = _mapOfOwnMessageCodes[message.Code];
                 foreach (var waitingMessage in _waitingOnResponseMessages)
                 {
                     //kdyz ma zprava podle vnitrni tabulky request

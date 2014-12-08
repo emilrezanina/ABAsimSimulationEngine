@@ -50,7 +50,7 @@ namespace SimulationEngine.Communication
             Sender = sender;
             DataParameters = dataParameters ?? new Dictionary<string, object>();
             Timestamp = timestamp;
-            AddressType = AddressType.Address;
+            AddressType = AddressType.Addressed;
             //dynamicAgent = null;
         }
 
