@@ -5,6 +5,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Threading;
 using CustomerService.AgentComponents;
+using CustomerService.Bear;
 using CustomerService.Structures;
 using SimulationEngine.Communication;
 using SimulationEngine.Components;
@@ -23,6 +24,7 @@ namespace CustomerService
     {
         private readonly SimulationKernel _simulation;
 
+        #region ObservableCollection
         //Zakaznici cekajici na obsluhu A
         private readonly ObservableCollection<Customer> _incomingCustomers = new ObservableCollection<Customer>();
         private readonly object _incomingCustomersLock = new object();
@@ -94,6 +96,7 @@ namespace CustomerService
             get { return _resourcesB; }
         }
 
+        #endregion
         public bool IsModelInicialized { get; private set; }
 
         private class CommunicationOutputReciever : IObserver<Message>
@@ -190,6 +193,7 @@ namespace CustomerService
             var actualTimeOutputReciever = new ActualTimeOutputReciever(ActualTimeTextBlock, Dispatcher);
             communicationOutputProvider.Subscribe(communicationOutputReciever);
             actualTimeOutputProvider.Subscribe(actualTimeOutputReciever);
+            new BearInjection(ThisWindow).Activate();
         }
 
         private void InicializeSimulationModel()
@@ -224,7 +228,7 @@ namespace CustomerService
 
             var managerResourceAdministrator = new ManagerResourceAdministrator(ComponentNameManager.AgentResourceAdministrator);
             var processMoveResource = new ProcessMoveResource(ComponentNameManager.ProcessMoveResource, _simulation.DiscreteSimulation);
-            var advisorSelectionOfFreeResources = new AdvisorSelectionOfFreeResources(ComponentNameManager.AdvisorSelectionOffFreeResources, model);
+            var advisorSelectionOfFreeResources = new AdvisorSelectionOfFreeResources(ComponentNameManager.AdvisorSelectionOfFreeResources, model);
             var actionAssignResource = new ActionAssignResource(ComponentNameManager.ActionAssignResource, model);
             var queryNeedMoveResource = new QueryNeedMoveResource(ComponentNameManager.QueryNeedMoveResource);
             var actionPutApplicantToQueueOnResource = new ActionPutApplicantToQueueOnResource(ComponentNameManager.ActionPutApplicantToQueueOnResource, model);

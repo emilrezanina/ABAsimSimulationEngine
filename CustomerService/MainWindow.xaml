@@ -52,7 +52,7 @@
             </StackPanel>
         </DataTemplate>
     </Window.Resources>
-    <Grid Width="790">
+    <Grid Name="MainGrid"  Width="790">
         <StackPanel Style="{StaticResource PanelForCustomerQueueWindow}"
             HorizontalAlignment="Left" VerticalAlignment="Top" 
             Margin="50,40,0,0">

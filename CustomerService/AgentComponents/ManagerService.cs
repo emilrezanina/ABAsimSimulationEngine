@@ -36,8 +36,8 @@ namespace CustomerService.AgentComponents
             msg.AddDataParameter(ParameterNameManager.Resource, message.DataParameters[ParameterNameManager.Resource]);
             SendExecuteMessage(msg);
             msg = msg.Result.Equals(ResultNameManager.ServiceA)
-                ? MessageProvider.CreateMessage(TypeMessage.Start, Name, ComponentNameManager.ProcessServiceA, null, message.DataParameters, message.Timestamp)
-                : MessageProvider.CreateMessage(TypeMessage.Start, Name, ComponentNameManager.ProcessServiceB, null, message.DataParameters, message.Timestamp);
+                ? MessageProvider.CreateMessage(TypeMessage.Start, Name, ComponentNameManager.ProcessServiceA, MessageCodeManager.StartServiceA, message.DataParameters, message.Timestamp)
+                : MessageProvider.CreateMessage(TypeMessage.Start, Name, ComponentNameManager.ProcessServiceB, MessageCodeManager.StartServiceB, message.DataParameters, message.Timestamp);
             SendStartMessage(msg);
         }
 
@@ -73,7 +73,7 @@ namespace CustomerService.AgentComponents
                     msg.AddDataParameter(ParameterNameManager.Resource, message.DataParameters[ParameterNameManager.Resource]);
                     SendNoticeMessage(msg);
                     //vyrazeni zakaznika z obsluhy
-                    msg = MessageProvider.CreateMessage(TypeMessage.Start, Name, ComponentNameManager.ProcessCustomerOutgoing, null, null, message.Timestamp);
+                    msg = MessageProvider.CreateMessage(TypeMessage.Start, Name, ComponentNameManager.ProcessCustomerOutgoing, MessageCodeManager.MovingOutgoingCustomer, null, message.Timestamp);
                     msg.AddDataParameter(ParameterNameManager.Applicant, message.DataParameters[ParameterNameManager.Applicant]);
                     SendExecuteMessage(msg);
                     break;
@@ -91,7 +91,7 @@ namespace CustomerService.AgentComponents
             {
                 case MessageCodeManager.WaitingNewCustomer:
                     var msg = MessageProvider.CreateMessage(TypeMessage.Start, Name, ComponentNameManager.ProcessMoveCustomer,
-                        null, null, message.Timestamp);
+                        MessageCodeManager.MovingCustomer, null, message.Timestamp);
                     msg.AddDataParameter(ParameterNameManager.Applicant, message.DataParameters[ParameterNameManager.Customer]);
                     SendStartMessage(msg);
                     break;

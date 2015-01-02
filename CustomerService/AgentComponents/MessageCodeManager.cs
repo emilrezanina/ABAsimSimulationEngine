@@ -15,7 +15,11 @@
         public const string IncomingCustomer = "Incoming customer";
         public const string OpenGate = "Open gate";
         public const string WaitingNewCustomer = "Waiting new customer";
-
+        public const string MovingCustomer = "Moving customer";
+        public const string StartServiceA = "Start service A";
+        public const string StartServiceB = "Start service B";
+        public const string MovingOutgoingCustomer = "Moving outgoing customer";
+        public const string IsQueueOfApplicantEmpty = "Is queue of applicant empty";
     }
 
     public struct ParameterNameManager
@@ -54,7 +58,7 @@
         public const string ProcessCustomerOutgoing = "pCustomerOutgoing";
         public const string AgentResourceAdministrator = "aResourceAdministrator";
         public const string ProcessMoveResource = "pMoveResource";
-        public const string AdvisorSelectionOffFreeResources = "adSelectionOfFreeResources";
+        public const string AdvisorSelectionOfFreeResources = "adSelectionOfFreeResources";
         public const string ActionAssignResource = "aAssignResource";
         public const string QueryNeedMoveResource = "qNeedMoveResource";
         public const string ActionPutApplicantToQueueOnResource = "aPutApplicantToQueueOnResource";

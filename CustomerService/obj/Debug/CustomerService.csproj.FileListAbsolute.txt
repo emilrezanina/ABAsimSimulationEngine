@@ -32,3 +32,4 @@ C:\Users\Emil\Documents\GitHub\ABAsimSimulationEngine\CustomerService\obj\Debug\
 C:\Users\Emil\Documents\GitHub\ABAsimSimulationEngine\CustomerService\obj\Debug\CustomerService.Properties.Resources.resources
 C:\Users\Emil\Documents\GitHub\ABAsimSimulationEngine\CustomerService\obj\Debug\CustomerService.csproj.GenerateResource.Cache
 C:\Users\Emil\Documents\GitHub\ABAsimSimulationEngine\CustomerService\obj\Debug\CustomerService.pdb
+C:\Users\Emil\Documents\GitHub\ABAsimSimulationEngine\CustomerService\obj\Debug\CustomerService_Content.g.cs

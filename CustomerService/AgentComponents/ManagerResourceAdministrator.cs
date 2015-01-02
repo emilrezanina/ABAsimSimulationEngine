@@ -37,11 +37,12 @@ namespace CustomerService.AgentComponents
             {
                 case MessageCodeManager.ReturnResource:
                     //p6 - uvolneni zdroje
-                    var msg = MessageProvider.CreateMessage(TypeMessage.Execute, Name, ComponentNameManager.ActionReturnResource, null,
-                        message.DataParameters, message.Timestamp);
+                    var msg = MessageProvider.CreateMessage(TypeMessage.Execute, Name, ComponentNameManager.ActionReturnResource, 
+                        MessageCodeManager.ReturnResource, message.DataParameters, message.Timestamp);
                     SendExecuteMessage(msg);
                     //p9 - je fronta na vraceny zdroj
-                    msg.Addressee = ComponentNameManager.QueryIsQueueOfApplicantEmpty;
+                    msg = MessageProvider.CreateMessage(TypeMessage.Execute, Name, ComponentNameManager.QueryIsQueueOfApplicantEmpty,
+                        MessageCodeManager.IsQueueOfApplicantEmpty, msg.DataParameters, message.Timestamp);
                     SendExecuteMessage(msg);
                     //fronta neni prazdna
                     if (msg.Result.Equals(ResultNameManager.QueueIsntEmpty))
@@ -95,7 +96,7 @@ namespace CustomerService.AgentComponents
 
         private void ProcessRequestMessage(Message message)
         {
-            var msg = MessageProvider.CreateMessage(TypeMessage.Execute, Name, ComponentNameManager.AdvisorSelectionOffFreeResources, null,
+            var msg = MessageProvider.CreateMessage(TypeMessage.Execute, Name, ComponentNameManager.AdvisorSelectionOfFreeResources, null,
                 message.DataParameters, message.Timestamp);
             SendExecuteMessage(msg);
             //pridelit zdroj
