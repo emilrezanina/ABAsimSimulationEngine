@@ -142,7 +142,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Arrow.png" />
+    <Resource Include="Resources\Arrow.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Fonts\" />
