@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Threading;
-using SimulationEngine.Modules.AnimationModule;
 using SimulationEngine.Modules.ConfigurationModule;
 using SimulationEngine.Modules.ContinuousSimulationModule;
 using SimulationEngine.Modules.DiscreteSimulationModule;
@@ -10,46 +9,16 @@ namespace SimulationEngine.SimulationKernel
 {
     public class SimulationKernel : ISimulationKernel, ISimulationControl
     {
-        private DiscreteSimulationModule _discreteSimulation;
-        public DiscreteSimulationModule DiscreteSimulation
-        {
-            get { return _discreteSimulation; }
-            set
-            {
-                _discreteSimulation = value;
-                _discreteSimulation.Control = this;
-            }
-        }
+        private Thread _performanceThread;
+        private long _actaulTime;
 
-        private ContinuousSimulationModule _continuousSimulation;
-        public ContinuousSimulationModule ContinuousSimulation
-        {
-            get { return _continuousSimulation; }
-            set
-            {
-                _continuousSimulation = value;
-                _continuousSimulation.Control = this;
-            }
-        }
-
-        public AnimationModule Animation { get; set; }
-
-        private ConfigurationModule _configuration;
-        public ConfigurationModule Configuration
-        {
-            get { return _configuration; }
-            set
-            {
-                _configuration = value;
-                _configuration.Control = this;
-            }
-        }
+        public DiscreteSimulationModule DiscreteSimulation { get; private set; }
+        public ContinuousSimulationModule ContinuousSimulation { get; private set; }
+        public ConfigurationModule Configuration { get; private set; }
 
         public CommunicationOutputProvider MessageOutputProvider { get; set; }
         public ActualTimeOutputProvider ActualTimeOutputProvider { get; set; }
 
-        private Thread _performanceThread;
-        private long _actaulTime;
         public long ActualTime
         {
             get { return _actaulTime; }
@@ -64,6 +33,10 @@ namespace SimulationEngine.SimulationKernel
 
         public SimulationKernel()
         {
+            DiscreteSimulation = new DiscreteSimulationModule(this);
+            ContinuousSimulation = new ContinuousSimulationModule(this);
+            Configuration = new ConfigurationModule(this);
+
             _performanceThread = null;
             Waiting = false;
             Speed = 1000;

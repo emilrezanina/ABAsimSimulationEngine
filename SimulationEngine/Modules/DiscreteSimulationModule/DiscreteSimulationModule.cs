@@ -10,15 +10,16 @@ namespace SimulationEngine.Modules.DiscreteSimulationModule
     public class DiscreteSimulationModule : IAttachedModule, IReciveSendMessage
     {
         private readonly Mailbox _centralMailbox;
-        public ISimulationControl Control { get; set; }
+        public ISimulationControl Control { get; private set; }
 
         public CommunicationOutputProvider MessageOutputProvider
         {
             get { return Control.MessageOutputProvider; }
         }
         
-        public DiscreteSimulationModule()
+        public DiscreteSimulationModule(ISimulationControl control)
         {
+            Control = control;
             _centralMailbox = new Mailbox();
         }
 
@@ -30,14 +31,14 @@ namespace SimulationEngine.Modules.DiscreteSimulationModule
             //      a) je vycerpany cas pro beh simulacniho programu
             //      b) v simulacnim programu nejsou zadne zpravy
             while ((!_centralMailbox.IsEmpty()
-                    || Control.Configuration.HaveComponentsMessages()))
+                    || Control.Configuration.Model.HaveComponentsMessages()))
             {
                 //3. Postupne vydavani pokynu vsem komponentam na odebirani zprav
                 //ze svojich schranek a jejich okamzitemu zpracovani
-                while (Control.Configuration.HaveComponentsMessages())
+                while (Control.Configuration.Model.HaveComponentsMessages())
                 {
                     //DODELAT OPTIMALIZACI, ABYCH NASEL HNED PRISLUSNY ZPRAVY KOMPONENTU
-                    foreach (IAgent agent in Control.Configuration.Agents)
+                    foreach (IAgent agent in Control.Configuration.Model.Agents)
                     {
                         agent.ProcessAllMessages();
                     }
@@ -85,7 +86,7 @@ namespace SimulationEngine.Modules.DiscreteSimulationModule
         private void MessageProcessing(Message message, bool immediately)
         {
             //nalezeni adresata
-            var addressee = Control.Configuration.FindAddressee(message.Addressee);
+            var addressee = Control.Configuration.Model.FindAddressee(message.Addressee);
             if (addressee != null)
             {
                 if (immediately)

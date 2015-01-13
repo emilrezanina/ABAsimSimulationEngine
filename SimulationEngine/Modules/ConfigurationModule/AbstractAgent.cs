@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using SimulationEngine.Communication;
 using SimulationEngine.Components;
 using SimulationEngine.Modules.DiscreteSimulationModule;
@@ -15,11 +16,11 @@ namespace SimulationEngine.Modules.ConfigurationModule
         private readonly Mailbox _mailbox;
         private readonly IReciveSendMessage _agentCommunication;
         protected CommunicationOutputProvider MessageOutputProvider;
-        //POUZE NA EVIDENCI
+
         private readonly IList<Message> _waitingOnResponseMessages;
 
         private AgentManager _manager;
-        public AgentManager Manager 
+        public AgentManager Manager
         {
             get { return _manager; }
             set
@@ -29,13 +30,13 @@ namespace SimulationEngine.Modules.ConfigurationModule
             }
         }
 
-        protected AbstractAgent(IReciveSendMessage agentCommunication)
+        protected AbstractAgent(IReciveSendMessage agentCommunication, AgentManager manager)
         {
             //NENI DODELANY CONTROLMODEL
             ControlModel = null;
             _components = new List<IComponent>();
             _mapOfOwnMessageCodes = new Dictionary<string, string[]>();
-            _manager = CreateManager();
+            Manager = manager;
             _mailbox = new Mailbox();
             _agentCommunication = agentCommunication;
             MessageOutputProvider = agentCommunication.MessageOutputProvider;
@@ -44,16 +45,8 @@ namespace SimulationEngine.Modules.ConfigurationModule
 
         public IComponent GetComponent(string name)
         {
-            if (_manager.Name.Equals(name))
-            {
-                return _manager;
-            }
-            foreach (var component in _components)
-            {
-                if (component.Name.Equals(name))
-                    return component;
-            }
-            return null;
+            return _manager.Name.Equals(name) ? _manager : 
+                _components.FirstOrDefault(component => component.Name.Equals(name));
         }
 
         public int MessageCount
@@ -63,16 +56,11 @@ namespace SimulationEngine.Modules.ConfigurationModule
 
         public void RegistrationComponent(IComponent component)
         {
-            if (!_components.Contains(component))
-            {
-                _components.Add(component);
-                component.ControlAgent = this;
-            }
-            else
-            {
-                //OSETRIT VYJMKU, ZE UZ TAM DANY KOMPONENT JE
+            if (_components.Contains(component))
                 throw new Exception("Component " + component.Name + "is already registred in Agent.");
-            }
+
+            _components.Add(component);
+            component.ControlAgent = this;
         }
 
         public IComponent CancellingComponent(IComponent component)
@@ -108,7 +96,7 @@ namespace SimulationEngine.Modules.ConfigurationModule
 
         public void ProcessAllMessages()
         {
-            while (_mailbox.MessageCount != 0)
+            while (!_mailbox.IsEmpty())
             {
                 var message = _mailbox.RemoveMessage();
                 MessageOutputProvider.TraceReceivedMessage(message);
@@ -119,7 +107,6 @@ namespace SimulationEngine.Modules.ConfigurationModule
                 }
                 else
                 {
-                    //VYVOLANI VYJIMKY, ZE NEBYL NALEZ ADRESAT
                     throw new Exception("Adressee " + message.Addressee + "not found.");
                 }
             }
@@ -128,51 +115,41 @@ namespace SimulationEngine.Modules.ConfigurationModule
         public void AgentsComunnication(Message message)
         {
             if (message.Type == TypeMessage.Response)
-                message = FindingRequestMessage(message);
-            //2. VYRESIT JESTLI SE JEDNA O MEZIAGENTOVOU KOMUNIKACI
+                message = GetRequestMessageForResponseMessage(message);
             switch (message.AddressType)
             {
-                //a) jestli se jedna o adresni zpravu
-                case AddressType.Addressed: SendAdressMessage(message); break;
-                //b) jestli se jedna o castne adresni zpravu
-                case AddressType.PartiallyAddressed: SendPartialyAdressMessage(message); break;
-                //c) jestli se jedna o neadresni zpravu
-                case AddressType.Unaddressed: SendNoAdressMessage(message); break;
+                case AddressType.Addressed: 
+                    SendAdressMessage(message); 
+                    break;
+                case AddressType.PartiallyAddressed: 
+                    SendPartialyAdressMessage(message); 
+                    break;
+                case AddressType.Unaddressed: 
+                    SendNoAdressMessage(message); 
+                    break;
                 default:
                     throw new Exception();
             }
         }
 
-        private Message FindingRequestMessage(Message message)
+        private Message GetRequestMessageForResponseMessage(Message message)
         {
+            foreach (var waitingMessage in _waitingOnResponseMessages.Where(waitingMessage => 
+                HasMessagesSameDataParameters(message, waitingMessage)))
             {
-                //ziskani potrebnych atributu pro nalezeni spravneho requestu
-                var attributes = _mapOfOwnMessageCodes[message.Code];
-                foreach (var waitingMessage in _waitingOnResponseMessages)
-                {
-                    //kdyz ma zprava podle vnitrni tabulky request
-                    //urcity pocet potrebnych identifikacnich kodu tak to vezme
-                    //vnitrni tabulka obsahuje: klic = kod zpravy, nazvy atributu
-                    //odstraneni te zpravy
-                    var same = true;
-                    foreach (var atribut in attributes)
-                    {
-                        if (!message.DataParameters[atribut].Equals(waitingMessage.DataParameters[atribut]))
-                        {
-                            same = false;
-                            break;
-                        }
-                    }
-                    if (same)
-                    {
-                        _waitingOnResponseMessages.Remove(waitingMessage);
-                        var msg = waitingMessage.Answer;
-                        msg.DataParameters = message.DataParameters;
-                        return message;
-                    }
-                }
-                return null;
+                _waitingOnResponseMessages.Remove(waitingMessage);
+                var msg = waitingMessage.Answer;
+                msg.DataParameters = message.DataParameters;
+                return message;
             }
+            return null;
+        }
+
+        private bool HasMessagesSameDataParameters(Message message, Message waitingMessage)
+        {
+            var attributes = _mapOfOwnMessageCodes[message.Code];
+            return attributes.All(atribut => 
+                message.DataParameters[atribut].Equals(waitingMessage.DataParameters[atribut]));
         }
 
         private void SendAdressMessage(Message message)
@@ -182,12 +159,12 @@ namespace SimulationEngine.Modules.ConfigurationModule
 
         private void SendPartialyAdressMessage(Message message)
         {
-
+            throw new NotImplementedException();
         }
 
         private void SendNoAdressMessage(Message message)
         {
-
+            throw new NotImplementedException();
         }
 
         public bool Equals(IAgent other)
@@ -199,7 +176,5 @@ namespace SimulationEngine.Modules.ConfigurationModule
         {
             return (Manager != null ? Manager.GetHashCode() : 0);
         }
-
-        protected abstract AgentManager CreateManager();
     }
 }

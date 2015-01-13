@@ -7,10 +7,11 @@ namespace SimulationEngine.Modules.ConfigurationModule
     public class DynamicAgent : AbstractAgent
     {
         private readonly Stack<string> _owners; 
-        public DynamicAgent(IReciveSendMessage agentCommunication) 
-            : base(agentCommunication)
+        public DynamicAgent(IReciveSendMessage agentCommunication, AgentManager manager) 
+            : base(agentCommunication, manager)
         {
             _owners = new Stack<string>();
+
         }
 
         public void AddOwner(string controlAgentName)
@@ -31,11 +32,6 @@ namespace SimulationEngine.Modules.ConfigurationModule
         public void SetAgentModel(AgentModel ownerModel)
         {
             ControlModel = ownerModel;
-        }
-
-        protected override AgentManager CreateManager()
-        {
-            return null;
         }
 
         public override string ToString()

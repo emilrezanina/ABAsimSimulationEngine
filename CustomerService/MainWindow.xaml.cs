@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Globalization;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Threading;
@@ -10,10 +11,8 @@ using CustomerService.Structures;
 using SimulationEngine.Communication;
 using SimulationEngine.Components;
 using SimulationEngine.Modules.ConfigurationModule;
-using SimulationEngine.Modules.DiscreteSimulationModule;
 using SimulationEngine.SimulationKernel;
 using SimulationEngine.SimulatorWriters;
-using IComponent = SimulationEngine.Components.IComponent;
 
 namespace CustomerService
 {
@@ -175,14 +174,10 @@ namespace CustomerService
             BindingOperations.EnableCollectionSynchronization(ResourcesA, _resourcesALock);
             BindingOperations.EnableCollectionSynchronization(ResourcesB, _resourcesBLock);
 
-            var discreteSimulationModule = new DiscreteSimulationModule();
-            var configurationModule = new ConfigurationModule();
             var communicationOutputProvider = new CommunicationOutputProvider();
             var actualTimeOutputProvider = new ActualTimeOutputProvider();
             _simulation = new SimulationKernel
             {
-                DiscreteSimulation = discreteSimulationModule,
-                Configuration = configurationModule,
                 ActualTimeOutputProvider = actualTimeOutputProvider,
                 MessageOutputProvider = communicationOutputProvider
             };
@@ -199,13 +194,14 @@ namespace CustomerService
         private void InicializeSimulationModel()
         {   
             var model = new ServiceSystemModel(this, 2, 1); //Pocet zdroju A: 1, Pocet zdroju B: 3
+            var simModel = new SimulationModel();
 
             AgentManager managerSurroundings = new ManagerSurroundings(ComponentNameManager.AgentSurroundings); //nesel by ComponentName odstranit
             IComponent processEnteringCustomer = new ProcessEnteringCustomer(ComponentNameManager.ProcessEnteringCustomer,
                 _simulation.DiscreteSimulation, model);
-            var agentSurroundings = new ControlAgent(_simulation.DiscreteSimulation) { Manager = managerSurroundings };
+            var agentSurroundings = new ControlAgent(_simulation.DiscreteSimulation, managerSurroundings);
             agentSurroundings.RegistrationComponent(processEnteringCustomer);
-            _simulation.Configuration.RegistrationControlAgent(agentSurroundings);
+            simModel.RegistrationControlAgent(agentSurroundings);
             agentSurroundings.RegistrationCodeMessage(MessageCodeManager.OutgoingCustomer, new[] { ParameterNameManager.Applicant });
 
             AgentManager managerService = new ManagerService(ComponentNameManager.AgentService);
@@ -216,13 +212,13 @@ namespace CustomerService
             var processServiceB = new ProcessServiceB(ComponentNameManager.ProcessServiceB, _simulation.DiscreteSimulation, model);
             var processCustomerOutgoing = new ProcessCustomerOutgoing(ComponentNameManager.ProcessCustomerOutgoing , 
                 _simulation.DiscreteSimulation, model);
-            var agentService = new ControlAgent(_simulation.DiscreteSimulation) { Manager = managerService };
+            var agentService = new ControlAgent(_simulation.DiscreteSimulation, managerService);
             agentService.RegistrationComponent(processMoveCustomer);
             agentService.RegistrationComponent(queryChoosingServiceType);
             agentService.RegistrationComponent(processServiceA);
             agentService.RegistrationComponent(processServiceB);
             agentService.RegistrationComponent(processCustomerOutgoing);
-            _simulation.Configuration.RegistrationControlAgent(agentService);
+            simModel.RegistrationControlAgent(agentService);
             agentService.RegistrationCodeMessage(MessageCodeManager.IncomingCustomer, new [] { ParameterNameManager.Customer });
             agentService.RegistrationCodeMessage(MessageCodeManager.DeliverResource, new[] { ParameterNameManager.Applicant });
 
@@ -235,10 +231,7 @@ namespace CustomerService
             var actionReturnResource = new ActionReturnResource(ComponentNameManager.ActionReturnResource, model);
             var queryIsQueueOfApplicantEmpty = new QueryIsQueueOfApplicantEmpty(ComponentNameManager.QueryIsQueueOfApplicantEmpty, model);
             var actionRemoveApplicantFromQueue = new ActionRemoveApplicantFromQueue(ComponentNameManager.ActionRemoveApplicantFromQueue, model);
-            var agentResourceAdministrator = new ControlAgent(_simulation.DiscreteSimulation)
-            {
-                Manager = managerResourceAdministrator
-            };
+            var agentResourceAdministrator = new ControlAgent(_simulation.DiscreteSimulation, managerResourceAdministrator);
             agentResourceAdministrator.RegistrationComponent(advisorSelectionOfFreeResources);
             agentResourceAdministrator.RegistrationComponent(actionAssignResource);
             agentResourceAdministrator.RegistrationComponent(queryNeedMoveResource);
@@ -247,7 +240,7 @@ namespace CustomerService
             agentResourceAdministrator.RegistrationComponent(actionReturnResource);
             agentResourceAdministrator.RegistrationComponent(queryIsQueueOfApplicantEmpty);
             agentResourceAdministrator.RegistrationComponent(actionRemoveApplicantFromQueue);
-            _simulation.Configuration.RegistrationControlAgent(agentResourceAdministrator);
+            simModel.RegistrationControlAgent(agentResourceAdministrator);
             agentResourceAdministrator.RegistrationCodeMessage(MessageCodeManager.DeliverResource, new[] { ParameterNameManager.Applicant });
             agentResourceAdministrator.RegistrationCodeMessage(MessageCodeManager.CompleteMoveResource, new[] { ParameterNameManager.Resource });
 
@@ -256,10 +249,11 @@ namespace CustomerService
                 MessageCodeManager.StartSimulation, null, 0);
             _simulation.DiscreteSimulation.ReciveMessage(startMessage);
 
+            _simulation.Configuration.Model = simModel;
             IsModelInicialized = true;
         }
 
-        private void Start_Click(object sender, System.Windows.RoutedEventArgs e)
+        private void Start_Click(object sender, RoutedEventArgs e)
         {
             if (!IsModelInicialized)
             {
@@ -268,7 +262,7 @@ namespace CustomerService
             _simulation.Run();
         }
 
-        private void Stop_Click(object sender, System.Windows.RoutedEventArgs e)
+        private void Stop_Click(object sender, RoutedEventArgs e)
         {
             _simulation.Stop();
         }

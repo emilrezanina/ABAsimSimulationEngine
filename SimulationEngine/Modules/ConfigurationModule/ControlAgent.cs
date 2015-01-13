@@ -5,15 +5,10 @@ namespace SimulationEngine.Modules.ConfigurationModule
 {
     public class ControlAgent : AbstractAgent 
     {
-        public ControlAgent(IReciveSendMessage agentCommunication) 
-            : base(agentCommunication)
+        public ControlAgent(IReciveSendMessage agentCommunication, AgentManager manager) 
+            : base(agentCommunication, manager)
         {
             ControlModel = new AgentModel(this);
-        }
-
-        protected override AgentManager CreateManager()
-        {
-            return null;
         }
 
         public override string ToString()

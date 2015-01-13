@@ -8,10 +8,9 @@ namespace SimulationEngine.SimulationKernel
 {
     public interface ISimulationControl
     {
-        DiscreteSimulationModule DiscreteSimulation { get; set; }
-        ContinuousSimulationModule ContinuousSimulation { get; set; }
-        AnimationModule Animation { get; set; }
-        ConfigurationModule Configuration { get; set; }
+        DiscreteSimulationModule DiscreteSimulation { get; }
+        ContinuousSimulationModule ContinuousSimulation { get; }
+        ConfigurationModule Configuration { get; }
         CommunicationOutputProvider MessageOutputProvider { get; }
         ActualTimeOutputProvider ActualTimeOutputProvider { get; }
 

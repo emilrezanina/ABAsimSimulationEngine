@@ -59,6 +59,7 @@
     <Compile Include="Modules\ConfigurationModule\ControlAgent.cs" />
     <Compile Include="Modules\ConfigurationModule\DynamicAgent.cs" />
     <Compile Include="Modules\ConfigurationModule\IAgent.cs" />
+    <Compile Include="Modules\ConfigurationModule\SimulationModel.cs" />
     <Compile Include="Modules\ContinuousSimulationModule\ContinuousSimulationModule.cs" />
     <Compile Include="Modules\DiscreteSimulationModule\DiscreteSimulationModule.cs" />
     <Compile Include="Modules\DiscreteSimulationModule\IReciveSendMessage.cs" />

@@ -56,7 +56,7 @@ namespace TestingProject.Structures
         private DynamicAgent GetNextPerson()
         {
             var managerPerson = new ManagerPerson("Person" + _order++);
-            var agentPerson = new DynamicAgent(HoldTarget) {Manager = managerPerson};
+            var agentPerson = new DynamicAgent(HoldTarget, managerPerson);
             return agentPerson;
         }
         
