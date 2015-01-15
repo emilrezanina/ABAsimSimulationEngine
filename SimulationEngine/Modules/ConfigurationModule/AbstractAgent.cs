@@ -10,7 +10,7 @@ namespace SimulationEngine.Modules.ConfigurationModule
 {
     public abstract class AbstractAgent : IAgent
     {
-        public AgentModel ControlModel { get; protected set; }
+        public AgentModel Model { get; protected set; }
         private readonly IList<IComponent> _components;
         private readonly IDictionary<string, string[]> _mapOfOwnMessageCodes;
         private readonly Mailbox _mailbox;
@@ -32,8 +32,6 @@ namespace SimulationEngine.Modules.ConfigurationModule
 
         protected AbstractAgent(IReciveSendMessage agentCommunication, AgentManager manager)
         {
-            //NENI DODELANY CONTROLMODEL
-            ControlModel = null;
             _components = new List<IComponent>();
             _mapOfOwnMessageCodes = new Dictionary<string, string[]>();
             Manager = manager;

@@ -31,7 +31,7 @@ namespace SimulationEngine.Modules.ConfigurationModule
 
         public void SetAgentModel(AgentModel ownerModel)
         {
-            ControlModel = ownerModel;
+            Model = ownerModel;
         }
 
         public override string ToString()

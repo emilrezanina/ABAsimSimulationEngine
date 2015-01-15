@@ -15,7 +15,7 @@ namespace SimulationEngine.Modules.ConfigurationModule
         void ReciveMessage(Message message);
         void RegistrationComponent(IComponent component);
         void RegistrationCodeMessage(string codeMessage, params string[] attributes);
-        AgentModel ControlModel { get; }
+        AgentModel Model { get; }
         void AgentsComunnication(Message message);
         bool Equals(IAgent other);
     }

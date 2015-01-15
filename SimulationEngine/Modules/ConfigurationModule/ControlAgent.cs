@@ -8,7 +8,7 @@ namespace SimulationEngine.Modules.ConfigurationModule
         public ControlAgent(IReciveSendMessage agentCommunication, AgentManager manager) 
             : base(agentCommunication, manager)
         {
-            ControlModel = new AgentModel(this);
+            Model = new AgentModel(this);
         }
 
         public override string ToString()
