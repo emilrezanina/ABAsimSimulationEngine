@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using SimulationEngine.Modules.ConfigurationModule;
+using SimulationEngine.Modules.SimulationModelModule;
 
 namespace SimulationEngine.Communication
 {

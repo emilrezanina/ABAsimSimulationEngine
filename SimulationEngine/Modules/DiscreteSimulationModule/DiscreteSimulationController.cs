@@ -1,23 +1,23 @@
 ﻿using System;
 using System.Threading;
 using SimulationEngine.Communication;
-using SimulationEngine.Modules.ConfigurationModule;
+using SimulationEngine.Modules.SimulationModelModule;
 using SimulationEngine.SimulationKernel;
 using SimulationEngine.SimulatorWriters;
 
 namespace SimulationEngine.Modules.DiscreteSimulationModule
 {
-    public class DiscreteSimulationModule : IAttachedModule, IReciveSendMessage
+    public class DiscreteSimulationController : IAttachedModule, IReciveSendMessage
     {
         private readonly Mailbox _centralMailbox;
-        public ISimulationControl Control { get; private set; }
+        public ISimulationContext Control { get; private set; }
 
         public CommunicationOutputProvider MessageOutputProvider
         {
             get { return Control.MessageOutputProvider; }
         }
         
-        public DiscreteSimulationModule(ISimulationControl control)
+        public DiscreteSimulationController(ISimulationContext control)
         {
             Control = control;
             _centralMailbox = new Mailbox();
@@ -31,14 +31,14 @@ namespace SimulationEngine.Modules.DiscreteSimulationModule
             //      a) je vycerpany cas pro beh simulacniho programu
             //      b) v simulacnim programu nejsou zadne zpravy
             while ((!_centralMailbox.IsEmpty()
-                    || Control.Configuration.Model.HaveComponentsMessages()))
+                    || Control.SimModel.HaveComponentsMessages()))
             {
                 //3. Postupne vydavani pokynu vsem komponentam na odebirani zprav
                 //ze svojich schranek a jejich okamzitemu zpracovani
-                while (Control.Configuration.Model.HaveComponentsMessages())
+                while (Control.SimModel.HaveComponentsMessages())
                 {
                     //DODELAT OPTIMALIZACI, ABYCH NASEL HNED PRISLUSNY ZPRAVY KOMPONENTU
-                    foreach (IAgent agent in Control.Configuration.Model.Agents)
+                    foreach (IAgent agent in Control.SimModel.Agents)
                     {
                         agent.ProcessAllMessages();
                     }
@@ -86,7 +86,7 @@ namespace SimulationEngine.Modules.DiscreteSimulationModule
         private void MessageProcessing(Message message, bool immediately)
         {
             //nalezeni adresata
-            var addressee = Control.Configuration.Model.FindAddressee(message.Addressee);
+            var addressee = Control.SimModel.FindAddressee(message.Addressee);
             if (addressee != null)
             {
                 if (immediately)

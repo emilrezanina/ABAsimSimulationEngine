@@ -1,16 +1,17 @@
-﻿using SimulationEngine.Modules.AnimationModule;
-using SimulationEngine.Modules.ConfigurationModule;
-using SimulationEngine.Modules.ContinuousSimulationModule;
+﻿using SimulationEngine.Modules.ContinuousSimulationModule;
 using SimulationEngine.Modules.DiscreteSimulationModule;
+using SimulationEngine.Modules.SimulationModelModule;
 using SimulationEngine.SimulatorWriters;
 
 namespace SimulationEngine.SimulationKernel
 {
-    public interface ISimulationControl
+    public interface ISimulationContext
     {
-        DiscreteSimulationModule DiscreteSimulation { get; }
-        ContinuousSimulationModule ContinuousSimulation { get; }
-        ConfigurationModule Configuration { get; }
+        DiscreteSimulationController DiscreteSimController { get; }
+        SimulationModel SimModel { get; set; }
+
+        ContinuousSimulationController ContinuousSimController { get; }
+        
         CommunicationOutputProvider MessageOutputProvider { get; }
         ActualTimeOutputProvider ActualTimeOutputProvider { get; }
 

@@ -1,9 +1,9 @@
-﻿using SimulationEngine.Components;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using SimulationEngine.Components;
 
-namespace SimulationEngine.Modules.ConfigurationModule
+namespace SimulationEngine.Modules.SimulationModelModule
 {
     public class SimulationModel
     {

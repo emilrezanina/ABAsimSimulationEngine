@@ -4,6 +4,6 @@ namespace SimulationEngine.Modules
 {
     public interface IAttachedModule
     {
-        ISimulationControl Control { get; }
+        ISimulationContext Control { get; }
     }
 }

@@ -1,7 +1,7 @@
 ﻿using SimulationEngine.Components;
 using SimulationEngine.Modules.DiscreteSimulationModule;
 
-namespace SimulationEngine.Modules.ConfigurationModule
+namespace SimulationEngine.Modules.SimulationModelModule
 {
     public class ControlAgent : AbstractAgent 
     {

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace SimulationEngine.Modules.ConfigurationModule
+namespace SimulationEngine.Modules.SimulationModelModule
 {
     public class AgentModel
     {

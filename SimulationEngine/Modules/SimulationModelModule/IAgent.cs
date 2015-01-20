@@ -1,7 +1,7 @@
 ﻿using SimulationEngine.Communication;
 using SimulationEngine.Components;
 
-namespace SimulationEngine.Modules.ConfigurationModule
+namespace SimulationEngine.Modules.SimulationModelModule
 {
     public interface IAgent
     {

@@ -6,7 +6,7 @@ using SimulationEngine.Components;
 using SimulationEngine.Modules.DiscreteSimulationModule;
 using SimulationEngine.SimulatorWriters;
 
-namespace SimulationEngine.Modules.ConfigurationModule
+namespace SimulationEngine.Modules.SimulationModelModule
 {
     public abstract class AbstractAgent : IAgent
     {
