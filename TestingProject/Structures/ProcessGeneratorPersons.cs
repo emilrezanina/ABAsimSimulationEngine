@@ -2,8 +2,8 @@
 using CustomerService.AgentComponents;
 using SimulationEngine.Communication;
 using SimulationEngine.Components;
-using SimulationEngine.Modules.ConfigurationModule;
 using SimulationEngine.Modules.DiscreteSimulationModule;
+using SimulationEngine.Modules.SimulationModelModule;
 
 namespace TestingProject.Structures
 {

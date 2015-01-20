@@ -161,3 +161,15 @@ pip-log.txt
 
 # Mac crap
 .DS_Store
+
+#Folders
+Debug/
+Release/
+CustomerService/
+DynamicAgentsTestingProject/
+TestingProject/
+TestingProject/Program.cs
+TestingProject/obj/Debug/TestingProject.exe
+TestingProject/Structures/ManagerSurroundings.cs
+TestingProject/obj/Debug/TestingProject.csprojResolveAssemblyReference.cache
+ABAsimSimulationEngine.sln

@@ -1,6 +1,6 @@
 ﻿using System;
 using SimulationEngine.Communication;
-using SimulationEngine.Modules.ConfigurationModule;
+using SimulationEngine.Modules.SimulationModelModule;
 using SimulationEngine.SimulationKernel;
 using SimulationEngine.SimulatorWriters;
 using TestingProject.Structures;
@@ -13,25 +13,25 @@ namespace TestingProject
         {
             var simulatorOutput = new CommunicationOutputProvider();
             var simModel = new SimulationModel();
-            var simKernel = new SimulationKernel()
+            var simKernel = new SimulationContext()
             {
                 MessageOutputProvider = simulatorOutput
             };
 
             var surroundingsManager = new ManagerSurroundings("mSurroundings");
-            var generatorCustomersPersons = new ProcessGeneratorPersons("pGeneratorPersons", simKernel.DiscreteSimulation);
-            var surroundingsAgent = new ControlAgent(simKernel.DiscreteSimulation, surroundingsManager);
+            var generatorCustomersPersons = new ProcessGeneratorPersons("pGeneratorPersons", simKernel.DiscreteSimController);
+            var surroundingsAgent = new ControlAgent(simKernel.DiscreteSimController, surroundingsManager);
             surroundingsAgent.RegistrationComponent(generatorCustomersPersons);
             surroundingsAgent.RegistrationCodeMessage("Begin generation", new String[] { });
             surroundingsAgent.RegistrationCodeMessage("End generation", new String[] { });
             surroundingsAgent.RegistrationCodeMessage("Person left", new[] { "Customer" });
 
             var modelManager = new ManagerModel("mModel");
-            var modelAgent = new ControlAgent(simKernel.DiscreteSimulation, modelManager);
+            var modelAgent = new ControlAgent(simKernel.DiscreteSimController, modelManager);
             modelAgent.RegistrationCodeMessage("New person", new String[] { });
  
             var serviceAManager = new ManagerServiceA("mServiceA");
-            var serviceAAgent = new ControlAgent(simKernel.DiscreteSimulation, serviceAManager);
+            var serviceAAgent = new ControlAgent(simKernel.DiscreteSimController, serviceAManager);
             serviceAAgent.RegistrationCodeMessage("Start service A", new String[] { });
 
             simModel.RegistrationControlAgent(surroundingsAgent);
@@ -44,8 +44,8 @@ namespace TestingProject
                     null,
                     0);
 
-            simKernel.Configuration.Model = simModel;
-            simKernel.DiscreteSimulation.ReciveMessage(msg);
+            simKernel.SimModel = simModel;
+            simKernel.DiscreteSimController.ReciveMessage(msg);
             simKernel.Run();
 
         }

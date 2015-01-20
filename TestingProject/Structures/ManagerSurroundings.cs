@@ -1,7 +1,6 @@
 ﻿using System;
 using SimulationEngine.Communication;
 using SimulationEngine.Components;
-using SimulationEngine.Modules.ConfigurationModule;
 
 namespace TestingProject.Structures
 {

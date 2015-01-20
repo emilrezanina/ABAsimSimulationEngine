@@ -10,7 +10,7 @@ using CustomerService.Bear;
 using CustomerService.Structures;
 using SimulationEngine.Communication;
 using SimulationEngine.Components;
-using SimulationEngine.Modules.ConfigurationModule;
+using SimulationEngine.Modules.SimulationModelModule;
 using SimulationEngine.SimulationKernel;
 using SimulationEngine.SimulatorWriters;
 
@@ -21,7 +21,7 @@ namespace CustomerService
     /// </summary>
     public partial class MainWindow
     {
-        private readonly SimulationKernel _simulation;
+        private readonly SimulationContext _simulation;
 
         #region ObservableCollection
         //Zakaznici cekajici na obsluhu A
@@ -176,7 +176,7 @@ namespace CustomerService
 
             var communicationOutputProvider = new CommunicationOutputProvider();
             var actualTimeOutputProvider = new ActualTimeOutputProvider();
-            _simulation = new SimulationKernel
+            _simulation = new SimulationContext
             {
                 ActualTimeOutputProvider = actualTimeOutputProvider,
                 MessageOutputProvider = communicationOutputProvider
@@ -198,21 +198,21 @@ namespace CustomerService
 
             AgentManager managerSurroundings = new ManagerSurroundings(ComponentNameManager.AgentSurroundings); //nesel by ComponentName odstranit
             IComponent processEnteringCustomer = new ProcessEnteringCustomer(ComponentNameManager.ProcessEnteringCustomer,
-                _simulation.DiscreteSimulation, model);
-            var agentSurroundings = new ControlAgent(_simulation.DiscreteSimulation, managerSurroundings);
+                _simulation.DiscreteSimController, model);
+            var agentSurroundings = new ControlAgent(_simulation.DiscreteSimController, managerSurroundings);
             agentSurroundings.RegistrationComponent(processEnteringCustomer);
             simModel.RegistrationControlAgent(agentSurroundings);
             agentSurroundings.RegistrationCodeMessage(MessageCodeManager.OutgoingCustomer, new[] { ParameterNameManager.Applicant });
 
             AgentManager managerService = new ManagerService(ComponentNameManager.AgentService);
             var processMoveCustomer = new ProcessMoveCustomer(ComponentNameManager.ProcessMoveCustomer,
-                _simulation.DiscreteSimulation, model);
+                _simulation.DiscreteSimController, model);
             var queryChoosingServiceType = new QueryChoosingServiceType(ComponentNameManager.QueryChoosingServiceType);
-            var processServiceA = new ProcessServiceA(ComponentNameManager.ProcessServiceA, _simulation.DiscreteSimulation, model);
-            var processServiceB = new ProcessServiceB(ComponentNameManager.ProcessServiceB, _simulation.DiscreteSimulation, model);
+            var processServiceA = new ProcessServiceA(ComponentNameManager.ProcessServiceA, _simulation.DiscreteSimController, model);
+            var processServiceB = new ProcessServiceB(ComponentNameManager.ProcessServiceB, _simulation.DiscreteSimController, model);
             var processCustomerOutgoing = new ProcessCustomerOutgoing(ComponentNameManager.ProcessCustomerOutgoing , 
-                _simulation.DiscreteSimulation, model);
-            var agentService = new ControlAgent(_simulation.DiscreteSimulation, managerService);
+                _simulation.DiscreteSimController, model);
+            var agentService = new ControlAgent(_simulation.DiscreteSimController, managerService);
             agentService.RegistrationComponent(processMoveCustomer);
             agentService.RegistrationComponent(queryChoosingServiceType);
             agentService.RegistrationComponent(processServiceA);
@@ -223,7 +223,7 @@ namespace CustomerService
             agentService.RegistrationCodeMessage(MessageCodeManager.DeliverResource, new[] { ParameterNameManager.Applicant });
 
             var managerResourceAdministrator = new ManagerResourceAdministrator(ComponentNameManager.AgentResourceAdministrator);
-            var processMoveResource = new ProcessMoveResource(ComponentNameManager.ProcessMoveResource, _simulation.DiscreteSimulation);
+            var processMoveResource = new ProcessMoveResource(ComponentNameManager.ProcessMoveResource, _simulation.DiscreteSimController);
             var advisorSelectionOfFreeResources = new AdvisorSelectionOfFreeResources(ComponentNameManager.AdvisorSelectionOfFreeResources, model);
             var actionAssignResource = new ActionAssignResource(ComponentNameManager.ActionAssignResource, model);
             var queryNeedMoveResource = new QueryNeedMoveResource(ComponentNameManager.QueryNeedMoveResource);
@@ -231,7 +231,7 @@ namespace CustomerService
             var actionReturnResource = new ActionReturnResource(ComponentNameManager.ActionReturnResource, model);
             var queryIsQueueOfApplicantEmpty = new QueryIsQueueOfApplicantEmpty(ComponentNameManager.QueryIsQueueOfApplicantEmpty, model);
             var actionRemoveApplicantFromQueue = new ActionRemoveApplicantFromQueue(ComponentNameManager.ActionRemoveApplicantFromQueue, model);
-            var agentResourceAdministrator = new ControlAgent(_simulation.DiscreteSimulation, managerResourceAdministrator);
+            var agentResourceAdministrator = new ControlAgent(_simulation.DiscreteSimController, managerResourceAdministrator);
             agentResourceAdministrator.RegistrationComponent(advisorSelectionOfFreeResources);
             agentResourceAdministrator.RegistrationComponent(actionAssignResource);
             agentResourceAdministrator.RegistrationComponent(queryNeedMoveResource);
@@ -247,9 +247,9 @@ namespace CustomerService
             var startMessage = MessageProvider.CreateMessage(TypeMessage.Notice, null, 
                 ComponentNameManager.AgentSurroundings,
                 MessageCodeManager.StartSimulation, null, 0);
-            _simulation.DiscreteSimulation.ReciveMessage(startMessage);
+            _simulation.DiscreteSimController.ReciveMessage(startMessage);
 
-            _simulation.Configuration.Model = simModel;
+            _simulation.SimModel = simModel;
             IsModelInicialized = true;
         }
 
