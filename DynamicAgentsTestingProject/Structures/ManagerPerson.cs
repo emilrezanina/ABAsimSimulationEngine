@@ -1,7 +1,8 @@
-﻿using SimulationEngine.Communication;
+﻿using System;
+using SimulationEngine.Communication;
 using SimulationEngine.Components;
 
-namespace TestingProject.Structures
+namespace DynamicAgentsTestingProject.Structures
 {
     class ManagerPerson : DynamicManager
     {
@@ -11,7 +12,7 @@ namespace TestingProject.Structures
 
         public override void ProcessTheMessage(Message message)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
     }
 }

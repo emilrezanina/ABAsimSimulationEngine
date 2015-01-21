@@ -2,11 +2,12 @@
 using SimulationEngine.Communication;
 using SimulationEngine.Components;
 
-namespace TestingProject.Structures
+namespace DynamicAgentsTestingProject.Structures
 {
-    class ManagerServiceA : ControlManager
+    class ManagerRegion : ControlManager
     {
-        public ManagerServiceA(string componentName) : base(componentName)
+        public ManagerRegion(string componentName)
+            : base(componentName)
         {
         }
 
@@ -15,13 +16,9 @@ namespace TestingProject.Structures
             switch (message.Type)
             {
                 case TypeMessage.Entrust:
-
-                    break;
-                case TypeMessage.Return:
-
                     break;
                 default:
-                    throw new Exception(message.Type + " message has not handler.");
+                    throw new Exception("Message type " + message.Type + " dont have handler.");
             }
         }
     }
