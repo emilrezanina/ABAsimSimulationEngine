@@ -165,9 +165,6 @@ pip-log.txt
 #Folders
 Debug/
 Release/
-CustomerService
-DynamicAgentsTestingProject
-TestingProject
-CustomerService/
-DynamicAgentsTestingProject/
-TestingProject/
+/CustomerService
+/DynamicAgentsTestingProject
+/TestingProject
