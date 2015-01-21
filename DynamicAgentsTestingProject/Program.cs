@@ -1,5 +1,4 @@
-﻿using System;
-using System.Drawing;
+﻿using System.Drawing;
 using DynamicAgentsTestingProject.NamesManagers;
 using DynamicAgentsTestingProject.Structures;
 using SimulationEngine.Modules.SimulationModelModule;

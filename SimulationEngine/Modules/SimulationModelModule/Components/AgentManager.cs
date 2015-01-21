@@ -1,7 +1,7 @@
 ﻿using System;
 using SimulationEngine.Communication;
 
-namespace SimulationEngine.Components
+namespace SimulationEngine.Modules.SimulationModelModule.Components
 {
     public abstract class AgentManager : AddressableComponent
     {

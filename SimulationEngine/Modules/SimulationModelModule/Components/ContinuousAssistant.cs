@@ -1,7 +1,7 @@
 ﻿using SimulationEngine.Communication;
 using SimulationEngine.Modules.DiscreteSimulationModule;
 
-namespace SimulationEngine.Components
+namespace SimulationEngine.Modules.SimulationModelModule.Components
 {
     public abstract class ContinuousAssistant : AddressableComponent
     {

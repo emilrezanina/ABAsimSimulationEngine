@@ -1,8 +1,7 @@
 ﻿using System;
 using SimulationEngine.Communication;
-using SimulationEngine.Modules.SimulationModelModule;
 
-namespace SimulationEngine.Components
+namespace SimulationEngine.Modules.SimulationModelModule.Components
 {
     public abstract class AbstractComponent : IComponent
     {

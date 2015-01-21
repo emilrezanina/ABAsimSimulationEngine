@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
-using SimulationEngine.Components;
 using SimulationEngine.Modules.DiscreteSimulationModule;
+using SimulationEngine.Modules.SimulationModelModule.Components;
 
 namespace SimulationEngine.Modules.SimulationModelModule
 {

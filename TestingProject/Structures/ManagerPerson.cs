@@ -1,5 +1,6 @@
-﻿using SimulationEngine.Communication;
-using SimulationEngine.Components;
+﻿using System;
+using SimulationEngine.Communication;
+using SimulationEngine.Modules.SimulationModelModule.Components;
 
 namespace TestingProject.Structures
 {
@@ -11,7 +12,7 @@ namespace TestingProject.Structures
 
         public override void ProcessTheMessage(Message message)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
     }
 }

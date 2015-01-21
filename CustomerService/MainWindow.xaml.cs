@@ -9,8 +9,8 @@ using CustomerService.AgentComponents;
 using CustomerService.Bear;
 using CustomerService.Structures;
 using SimulationEngine.Communication;
-using SimulationEngine.Components;
 using SimulationEngine.Modules.SimulationModelModule;
+using SimulationEngine.Modules.SimulationModelModule.Components;
 using SimulationEngine.SimulationKernel;
 using SimulationEngine.SimulatorWriters;
 

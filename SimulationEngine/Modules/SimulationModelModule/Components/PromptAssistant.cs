@@ -1,4 +1,4 @@
-﻿namespace SimulationEngine.Components
+﻿namespace SimulationEngine.Modules.SimulationModelModule.Components
 {
     public abstract class PromptAssistant : AbstractComponent
     {

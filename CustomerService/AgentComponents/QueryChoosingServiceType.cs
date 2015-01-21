@@ -1,6 +1,6 @@
 ﻿using CustomerService.Structures;
 using SimulationEngine.Communication;
-using SimulationEngine.Components;
+using SimulationEngine.Modules.SimulationModelModule.Components;
 
 namespace CustomerService.AgentComponents
 {

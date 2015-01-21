@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using SimulationEngine.Communication;
-using SimulationEngine.Components;
 using SimulationEngine.Modules.DiscreteSimulationModule;
+using SimulationEngine.Modules.SimulationModelModule.Components;
 using SimulationEngine.SimulatorWriters;
 
 namespace SimulationEngine.Modules.SimulationModelModule
