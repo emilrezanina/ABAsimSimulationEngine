@@ -58,6 +58,7 @@
     <Compile Include="Modules\SimulationModelModule\ControlAgent.cs" />
     <Compile Include="Modules\SimulationModelModule\DynamicAgent.cs" />
     <Compile Include="Modules\SimulationModelModule\IAgent.cs" />
+    <Compile Include="Modules\SimulationModelModule\ModelStateSpace.cs" />
     <Compile Include="Modules\SimulationModelModule\SimulationModel.cs" />
     <Compile Include="Modules\ContinuousSimulationModule\ContinuousSimulationController.cs" />
     <Compile Include="Modules\DiscreteSimulationModule\DiscreteSimulationController.cs" />

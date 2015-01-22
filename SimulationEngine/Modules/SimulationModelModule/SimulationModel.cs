@@ -9,6 +9,8 @@ namespace SimulationEngine.Modules.SimulationModelModule
     {
         public string Name { get; set; }
         public IList<ControlAgent> Agents { get; private set; }
+        public ModelStateSpace StateSpace { get; set; }
+
 
         public SimulationModel()
         {
