@@ -8,10 +8,10 @@ namespace SimulationEngine.Modules.SimulationModelModule.Components
         public IAgent ControlAgent { get; set; }
         public string Name { get; set; }
 
-        protected AbstractComponent(string componentName)
+        protected AbstractComponent(string name)
         {
             ControlAgent = null;
-            Name = componentName;
+            Name = name;
         }
 
         public abstract void ProcessTheMessage(Message message);

@@ -6,7 +6,7 @@ namespace CustomerService.AgentComponents
 {
     class QueryNeedMoveResource : AbstractComponent
     {
-        public QueryNeedMoveResource(string componentName) : base(componentName)
+        public QueryNeedMoveResource(string name) : base(name)
         {
         }
 

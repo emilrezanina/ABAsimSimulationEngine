@@ -10,9 +10,9 @@ namespace CustomerService.AgentComponents
         private int _endTime;
         private readonly ServiceSystemModel _model;
 
-        public ProcessEnteringCustomer(string componentName, IReciveSendMessage holdTarget,
+        public ProcessEnteringCustomer(string name, IReciveSendMessage holdTarget,
             ServiceSystemModel model)
-            : base(componentName, holdTarget)
+            : base(name, holdTarget)
         {
             _model = model;
         }

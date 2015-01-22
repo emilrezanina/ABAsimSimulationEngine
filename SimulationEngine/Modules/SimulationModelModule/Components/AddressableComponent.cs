@@ -4,7 +4,7 @@ namespace SimulationEngine.Modules.SimulationModelModule.Components
 {
     public abstract class AddressableComponent : AbstractComponent
     {
-        protected AddressableComponent(string componentName) : base(componentName)
+        protected AddressableComponent(string name) : base(name)
         {
         }
 

@@ -5,7 +5,7 @@ namespace SimulationEngine.Modules.SimulationModelModule.Components
 {
     public abstract class AgentManager : AddressableComponent
     {
-        protected AgentManager(string componentName) : base(componentName)
+        protected AgentManager(string name) : base(name)
         {
         }
 

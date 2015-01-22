@@ -9,8 +9,8 @@ namespace CustomerService.AgentComponents
     {
         private readonly ServiceSystemModel _model;
 
-        public ProcessMoveCustomer(string componentName, IReciveSendMessage holdTarget, ServiceSystemModel model)
-            : base(componentName, holdTarget)
+        public ProcessMoveCustomer(string name, IReciveSendMessage holdTarget, ServiceSystemModel model)
+            : base(name, holdTarget)
         {
             _model = model;
         }

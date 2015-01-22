@@ -5,8 +5,8 @@ namespace CustomerService.AgentComponents
 {
     internal class ManagerSurroundings : ControlManager
     {
-        public ManagerSurroundings(string componentName)
-            : base(componentName)
+        public ManagerSurroundings(string name)
+            : base(name)
         {
         }
 

@@ -9,7 +9,7 @@ namespace CustomerService.AgentComponents
     {
         private readonly ServiceSystemModel _model;
 
-        public ProcessServiceA(string componentName, IReciveSendMessage holdTarget, ServiceSystemModel model) : base(componentName, holdTarget)
+        public ProcessServiceA(string name, IReciveSendMessage holdTarget, ServiceSystemModel model) : base(name, holdTarget)
         {
             _model = model;
         }

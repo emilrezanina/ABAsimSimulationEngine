@@ -8,7 +8,7 @@ namespace CustomerService.AgentComponents
     class ProcessCustomerOutgoing : ContinuousAssistant
     {
         private readonly ServiceSystemModel _model;
-        public ProcessCustomerOutgoing(string componentName, IReciveSendMessage holdTarget, ServiceSystemModel model) : base(componentName, holdTarget)
+        public ProcessCustomerOutgoing(string name, IReciveSendMessage holdTarget, ServiceSystemModel model) : base(name, holdTarget)
         {
             _model = model;
         }

@@ -6,8 +6,8 @@ namespace CustomerService.AgentComponents
 {
     class ManagerService : ControlManager
     {
-        public ManagerService(string componentName)
-            : base(componentName)
+        public ManagerService(string name)
+            : base(name)
         {
         }
 

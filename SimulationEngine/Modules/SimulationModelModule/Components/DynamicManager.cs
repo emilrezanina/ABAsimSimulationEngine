@@ -4,7 +4,7 @@ namespace SimulationEngine.Modules.SimulationModelModule.Components
 {
     public abstract class DynamicManager : AgentManager
     {
-        protected DynamicManager(string componentName) : base(componentName)
+        protected DynamicManager(string name) : base(name)
         {
         }
 

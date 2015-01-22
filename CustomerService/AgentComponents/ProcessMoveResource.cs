@@ -6,7 +6,7 @@ namespace CustomerService.AgentComponents
 {
     class ProcessMoveResource : ContinuousAssistant
     {
-        public ProcessMoveResource(string componentName, IReciveSendMessage holdTarget) : base(componentName, holdTarget)
+        public ProcessMoveResource(string name, IReciveSendMessage holdTarget) : base(name, holdTarget)
         {
         }
 

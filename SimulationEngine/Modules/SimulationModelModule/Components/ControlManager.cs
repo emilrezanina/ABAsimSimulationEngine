@@ -4,7 +4,7 @@ namespace SimulationEngine.Modules.SimulationModelModule.Components
 {
     public abstract class ControlManager : AgentManager
     {
-        protected ControlManager(string componentName) : base(componentName)
+        protected ControlManager(string name) : base(name)
         {
         }
 

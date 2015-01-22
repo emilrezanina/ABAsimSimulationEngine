@@ -8,7 +8,7 @@ namespace CustomerService.AgentComponents
     {
         private readonly ServiceSystemModel _model;
 
-        public ActionReturnResource(string componentName, ServiceSystemModel model) : base(componentName)
+        public ActionReturnResource(string name, ServiceSystemModel model) : base(name)
         {
             _model = model;
         }

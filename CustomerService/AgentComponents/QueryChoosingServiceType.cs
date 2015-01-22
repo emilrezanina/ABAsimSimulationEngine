@@ -7,7 +7,7 @@ namespace CustomerService.AgentComponents
     class QueryChoosingServiceType : AbstractComponent
     {
 
-        public QueryChoosingServiceType(string componentName) : base(componentName)
+        public QueryChoosingServiceType(string name) : base(name)
         {
         }
 

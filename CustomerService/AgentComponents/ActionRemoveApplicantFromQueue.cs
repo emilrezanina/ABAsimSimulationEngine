@@ -8,8 +8,8 @@ namespace CustomerService.AgentComponents
     {
         private readonly ServiceSystemModel _model;
 
-        public ActionRemoveApplicantFromQueue(string componentName, ServiceSystemModel model)
-            : base(componentName)
+        public ActionRemoveApplicantFromQueue(string name, ServiceSystemModel model)
+            : base(name)
         {
             _model = model;
         }

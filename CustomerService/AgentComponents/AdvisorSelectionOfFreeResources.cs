@@ -8,7 +8,7 @@ namespace CustomerService.AgentComponents
     {
         private readonly ServiceSystemModel _model;
 
-        public AdvisorSelectionOfFreeResources(string componentName, ServiceSystemModel model) : base(componentName)
+        public AdvisorSelectionOfFreeResources(string name, ServiceSystemModel model) : base(name)
         {
             _model = model;
         }

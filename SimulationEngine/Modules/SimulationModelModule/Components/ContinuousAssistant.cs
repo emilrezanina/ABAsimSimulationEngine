@@ -7,8 +7,8 @@ namespace SimulationEngine.Modules.SimulationModelModule.Components
     {
         public IReciveSendMessage HoldTarget { get; private set; }
 
-        protected ContinuousAssistant(string componentName, IReciveSendMessage holdTarget)
-            : base(componentName)
+        protected ContinuousAssistant(string name, IReciveSendMessage holdTarget)
+            : base(name)
         {
             HoldTarget = holdTarget;
         }
