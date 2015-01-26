@@ -16,7 +16,7 @@ namespace SimulationEngine.Modules.DiscreteSimulationModule
         {
             get { return Control.MessageOutputProvider; }
         }
-        
+
         public DiscreteSimulationController(ISimulationContext control)
         {
             Control = control;

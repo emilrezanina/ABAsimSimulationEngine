@@ -37,6 +37,9 @@ namespace SimulationEngine.SimulationKernel
         {
             DiscreteSimController = new DiscreteSimulationController(this);
             ContinuousSimController = new ContinuousSimulationController(this);
+            ActualTimeOutputProvider = new ActualTimeOutputProvider();
+            MessageOutputProvider = new CommunicationOutputProvider();
+
             _performanceThread = null;
             Waiting = false;
             Speed = 1000;
@@ -61,7 +64,7 @@ namespace SimulationEngine.SimulationKernel
             }
 
             if (Waiting)
-                Waiting = false;   
+                Waiting = false;
         }
 
         public void Stop()
