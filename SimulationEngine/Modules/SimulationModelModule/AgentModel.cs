@@ -19,7 +19,7 @@ namespace SimulationEngine.Modules.SimulationModelModule
         public void AddDynamicAgent(DynamicAgent agent)
         {
             DynamicAgents.Add(agent);
-            agent.SetAgentModel(this);
+            agent.FullSetAgentModel(this);
         }
         public DynamicAgent RemoveDynamicAgent(DynamicAgent agent)
         {

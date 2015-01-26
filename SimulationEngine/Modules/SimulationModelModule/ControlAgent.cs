@@ -1,4 +1,5 @@
-﻿using SimulationEngine.Modules.DiscreteSimulationModule;
+﻿using SimulationEngine.Communication;
+using SimulationEngine.Modules.DiscreteSimulationModule;
 using SimulationEngine.Modules.SimulationModelModule.Components;
 
 namespace SimulationEngine.Modules.SimulationModelModule
@@ -15,5 +16,24 @@ namespace SimulationEngine.Modules.SimulationModelModule
         {
             return "ControlAgent: " + Manager;
         }
+
+        public override void ReciveMessage(Message message)
+        {
+            if (message.Type == TypeMessage.Handover)
+            {
+                var transferedDynamicAgent = message.DynamicAgent;
+                Model.AddDynamicAgent(transferedDynamicAgent);
+                transferedDynamicAgent.FullSetAgentModel(Model);
+            }
+
+            if (message.Type == TypeMessage.Entrust)
+            {
+                var transferedDynamicAgent = message.DynamicAgent;
+                Model.AddDynamicAgent(transferedDynamicAgent);
+                transferedDynamicAgent.TemporarySetAgentModel(Model);
+            }
+            base.ReciveMessage(message);
+        }
+        
     }
 }

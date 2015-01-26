@@ -54,7 +54,6 @@ namespace SimulationEngine.Modules.SimulationModelModule.Components
             }
             else
             {
-                //VYVOLANI VYJIMKY, ZE NEBYL DANY KOMPONENT NALEZEN
                 throw new Exception("Assistant " + message.Addressee + " not found.");
             }
         }

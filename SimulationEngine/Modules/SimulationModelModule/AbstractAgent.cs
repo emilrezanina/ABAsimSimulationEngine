@@ -81,7 +81,7 @@ namespace SimulationEngine.Modules.SimulationModelModule
             return _mapOfOwnMessageCodes.ContainsKey(codeMessage);
         }
 
-        public void ReciveMessage(Message message)
+        public virtual void ReciveMessage(Message message)
         {
             if (message.Type == TypeMessage.Request)
             {

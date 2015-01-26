@@ -14,24 +14,22 @@ namespace SimulationEngine.Modules.SimulationModelModule
 
         }
 
-        public void AddOwner(string controlAgentName)
-        {
-            _owners.Push(controlAgentName);
-        }
-
-        public string RemoveLastOwner()
-        {
-            return _owners.Pop();
-        }
-
-        public string GetLastOwner()
+        public string GetCurrentOwner()
         {
             return _owners.Peek();
         }
 
-        public void SetAgentModel(AgentModel ownerModel)
+        public void FullSetAgentModel(AgentModel model)
         {
-            Model = ownerModel;
+            Model = model;
+            _owners.Clear();
+            _owners.Push(model.Agent.Manager.Name);
+        }
+
+        public void TemporarySetAgentModel(AgentModel model)
+        {
+            Model = model;
+            _owners.Push(model.Agent.Manager.Name);
         }
 
         public override string ToString()
