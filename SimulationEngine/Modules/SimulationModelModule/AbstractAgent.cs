@@ -14,8 +14,7 @@ namespace SimulationEngine.Modules.SimulationModelModule
         private readonly IList<IComponent> _components;
         private readonly IDictionary<string, string[]> _mapOfOwnMessageCodes;
         private readonly Mailbox _mailbox;
-        private readonly IReciveSendMessage _agentCommunication;
-        protected CommunicationOutputProvider MessageOutputProvider;
+        public IReciveSendMessage AgentCommunication { get; set; }
 
         private readonly IList<Message> _waitingOnResponseMessages;
 
@@ -36,8 +35,7 @@ namespace SimulationEngine.Modules.SimulationModelModule
             _mapOfOwnMessageCodes = new Dictionary<string, string[]>();
             Manager = manager;
             _mailbox = new Mailbox();
-            _agentCommunication = agentCommunication;
-            MessageOutputProvider = agentCommunication.MessageOutputProvider;
+            AgentCommunication = agentCommunication;
             _waitingOnResponseMessages = new List<Message>();
         }
 
@@ -97,7 +95,6 @@ namespace SimulationEngine.Modules.SimulationModelModule
             while (!_mailbox.IsEmpty())
             {
                 var message = _mailbox.RemoveMessage();
-                MessageOutputProvider.TraceReceivedMessage(message);
                 var component = GetComponent(message.Addressee);
                 if (component != null)
                 {
@@ -152,7 +149,7 @@ namespace SimulationEngine.Modules.SimulationModelModule
 
         private void SendAdressMessage(Message message)
         {
-            _agentCommunication.SendMessage(message);
+            AgentCommunication.SendMessage(message);
         }
 
         private void SendPartialyAdressMessage(Message message)

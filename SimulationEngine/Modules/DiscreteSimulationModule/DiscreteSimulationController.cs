@@ -3,7 +3,6 @@ using System.Threading;
 using SimulationEngine.Communication;
 using SimulationEngine.Modules.SimulationModelModule;
 using SimulationEngine.SimulationKernel;
-using SimulationEngine.SimulatorWriters;
 
 namespace SimulationEngine.Modules.DiscreteSimulationModule
 {
@@ -11,12 +10,6 @@ namespace SimulationEngine.Modules.DiscreteSimulationModule
     {
         private readonly Mailbox _centralMailbox;
         public ISimulationContext Control { get; private set; }
-
-        public CommunicationOutputProvider MessageOutputProvider
-        {
-            get { return Control.MessageOutputProvider; }
-        }
-
         public DiscreteSimulationController(ISimulationContext control)
         {
             Control = control;

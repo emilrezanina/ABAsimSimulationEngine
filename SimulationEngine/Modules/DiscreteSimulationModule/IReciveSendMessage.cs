@@ -7,6 +7,5 @@ namespace SimulationEngine.Modules.DiscreteSimulationModule
     {
         void ReciveMessage(Message message);
         void SendMessage(Message message);
-        CommunicationOutputProvider MessageOutputProvider { get; }
     }
 }
