@@ -1,9 +1,16 @@
-﻿using Xunit;
+﻿using SimulationEngine.Modules.SimulationModelModule;
+using Xunit;
 
 namespace SimulationEngineTests
 {
-    class SimulationModelTests
+    public class SimulationModelTests
     {
+        [Fact]
+        public void ReturnMethodIsEmptyTrueIfSimulationModelIsWithoutUnprocessedMessages()
+        {
+            var simModel = new SimulationModel();
+            Assert.True(simModel.IsEmpty());
+        }
         //[Fact]
         //void CheckCountOfAgent()
         //{
