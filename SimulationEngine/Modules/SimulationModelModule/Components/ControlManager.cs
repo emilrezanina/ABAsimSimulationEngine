@@ -10,12 +10,12 @@ namespace SimulationEngine.Modules.SimulationModelModule.Components
 
         public void SendHandoverMessage(Message message)
         {
-            ControlAgent.AgentsComunnication(message);
+            ControlAgent.AgentsComunnicationExecution(message);
         }
 
         public void SendEntrustMessage(Message message)
         {
-            ControlAgent.AgentsComunnication(message);
+            ControlAgent.AgentsComunnicationExecution(message);
         }
 
         //DODELAT

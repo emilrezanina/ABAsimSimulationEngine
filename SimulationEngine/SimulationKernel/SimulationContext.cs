@@ -3,14 +3,12 @@ using System.Threading;
 using SimulationEngine.Modules.ContinuousSimulationModule;
 using SimulationEngine.Modules.DiscreteSimulationModule;
 using SimulationEngine.Modules.SimulationModelModule;
-using SimulationEngine.SimulatorWriters;
 
 namespace SimulationEngine.SimulationKernel
 {
     public class SimulationContext : ISimulationKernel, ISimulationContext
     {
         private Thread _performanceThread;
-        private long _actaulTime;
 
         public DiscreteSimulationController DiscreteSimController { get; private set; }
         public SimulationModel SimModel { get; set; }
@@ -18,18 +16,9 @@ namespace SimulationEngine.SimulationKernel
 
         public ContinuousSimulationController ContinuousSimController { get; private set; }
 
-        public CommunicationOutputProvider MessageOutputProvider { get; set; }
-        public ActualTimeOutputProvider ActualTimeOutputProvider { get; set; }
 
-        public long ActualTime
-        {
-            get { return _actaulTime; }
-            set
-            {
-                _actaulTime = value;
-                ActualTimeOutputProvider.ChangingActualTime(value);
-            }
-        }
+        public long ActualTime { get; set; }
+
         public short Speed { get; set; }
         public bool Waiting { get; set; }
 
@@ -37,8 +26,6 @@ namespace SimulationEngine.SimulationKernel
         {
             DiscreteSimController = new DiscreteSimulationController(this);
             ContinuousSimController = new ContinuousSimulationController(this);
-            ActualTimeOutputProvider = new ActualTimeOutputProvider();
-            MessageOutputProvider = new CommunicationOutputProvider();
 
             _performanceThread = null;
             Waiting = false;

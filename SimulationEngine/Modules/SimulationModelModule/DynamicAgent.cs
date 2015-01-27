@@ -7,8 +7,8 @@ namespace SimulationEngine.Modules.SimulationModelModule
     public class DynamicAgent : AbstractAgent
     {
         private readonly Stack<string> _owners; 
-        public DynamicAgent(IReciveSendMessage agentCommunication, AgentManager manager) 
-            : base(agentCommunication, manager)
+        public DynamicAgent(IReciveSendMessage messageSenderAndReciever, AgentManager manager) 
+            : base(messageSenderAndReciever, manager)
         {
             _owners = new Stack<string>();
 

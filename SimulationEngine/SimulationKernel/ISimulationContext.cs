@@ -12,8 +12,6 @@ namespace SimulationEngine.SimulationKernel
 
         ContinuousSimulationController ContinuousSimController { get; }
         
-        CommunicationOutputProvider MessageOutputProvider { get; }
-        ActualTimeOutputProvider ActualTimeOutputProvider { get; }
 
         long ActualTime { get; set; }
         short Speed { get; set; }

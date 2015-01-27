@@ -6,8 +6,8 @@ namespace SimulationEngine.Modules.SimulationModelModule
 {
     public class ControlAgent : AbstractAgent 
     {
-        public ControlAgent(IReciveSendMessage agentCommunication, AgentManager manager) 
-            : base(agentCommunication, manager)
+        public ControlAgent(IReciveSendMessage messageSenderAndReciever, AgentManager manager) 
+            : base(messageSenderAndReciever, manager)
         {
             Model = new AgentModel(this);
         }

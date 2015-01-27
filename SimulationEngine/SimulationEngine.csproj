@@ -40,6 +40,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Communication\MessageProvider.cs" />
+    <Compile Include="Exceptions\AddresseeNotFoundException.cs" />
+    <Compile Include="Exceptions\AgentIsAlreadyRegistredException.cs" />
+    <Compile Include="Exceptions\ComponentIsAlreadyRegistredException.cs" />
     <Compile Include="Modules\SimulationModelModule\Components\AbstractComponent.cs" />
     <Compile Include="Modules\SimulationModelModule\Components\AddressableComponent.cs" />
     <Compile Include="Modules\SimulationModelModule\Components\ContinuousAssistant.cs" />

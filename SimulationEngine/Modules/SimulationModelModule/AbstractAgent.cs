@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using SimulationEngine.Communication;
+using SimulationEngine.Exceptions;
 using SimulationEngine.Modules.DiscreteSimulationModule;
 using SimulationEngine.Modules.SimulationModelModule.Components;
-using SimulationEngine.SimulatorWriters;
 
 namespace SimulationEngine.Modules.SimulationModelModule
 {
@@ -14,7 +14,7 @@ namespace SimulationEngine.Modules.SimulationModelModule
         private readonly IList<IComponent> _components;
         private readonly IDictionary<string, string[]> _mapOfOwnMessageCodes;
         private readonly Mailbox _mailbox;
-        public IReciveSendMessage AgentCommunication { get; set; }
+        public IReciveSendMessage MessageSenderAndReciever { get; set; }
 
         private readonly IList<Message> _waitingOnResponseMessages;
 
@@ -29,13 +29,13 @@ namespace SimulationEngine.Modules.SimulationModelModule
             }
         }
 
-        protected AbstractAgent(IReciveSendMessage agentCommunication, AgentManager manager)
+        protected AbstractAgent(IReciveSendMessage messageSenderAndReciever, AgentManager manager)
         {
             _components = new List<IComponent>();
             _mapOfOwnMessageCodes = new Dictionary<string, string[]>();
             Manager = manager;
             _mailbox = new Mailbox();
-            AgentCommunication = agentCommunication;
+            MessageSenderAndReciever = messageSenderAndReciever;
             _waitingOnResponseMessages = new List<Message>();
         }
 
@@ -45,15 +45,10 @@ namespace SimulationEngine.Modules.SimulationModelModule
                 _components.FirstOrDefault(component => component.Name.Equals(name));
         }
 
-        public int MessageCount
-        {
-            get { return _mailbox.MessageCount; }
-        }
-
         public void RegistrationComponent(IComponent component)
         {
             if (_components.Contains(component))
-                throw new Exception("Component " + component.Name + "is already registred in Agent.");
+                throw new ComponentIsAlreadyRegistredException(component.Name, Manager.Name);
 
             _components.Add(component);
             component.ControlAgent = this;
@@ -87,27 +82,10 @@ namespace SimulationEngine.Modules.SimulationModelModule
                 message.Answer = ansferMessage;
                 _waitingOnResponseMessages.Add(message);
             }
-            _mailbox.AddMessage(message);
+            Manager.ProcessTheMessage(message);
         }
 
-        public void ProcessAllMessages()
-        {
-            while (!_mailbox.IsEmpty())
-            {
-                var message = _mailbox.RemoveMessage();
-                var component = GetComponent(message.Addressee);
-                if (component != null)
-                {
-                    component.ProcessTheMessage(message);
-                }
-                else
-                {
-                    throw new Exception("Adressee " + message.Addressee + "not found.");
-                }
-            }
-        }
-
-        public void AgentsComunnication(Message message)
+        public void AgentsComunnicationExecution(Message message)
         {
             if (message.Type == TypeMessage.Response)
                 message = GetRequestMessageForResponseMessage(message);
@@ -149,7 +127,7 @@ namespace SimulationEngine.Modules.SimulationModelModule
 
         private void SendAdressMessage(Message message)
         {
-            AgentCommunication.SendMessage(message);
+            MessageSenderAndReciever.SendMessage(message);
         }
 
         private void SendPartialyAdressMessage(Message message)

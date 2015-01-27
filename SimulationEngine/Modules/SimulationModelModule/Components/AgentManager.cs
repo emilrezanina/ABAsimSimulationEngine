@@ -1,5 +1,5 @@
-﻿using System;
-using SimulationEngine.Communication;
+﻿using SimulationEngine.Communication;
+using SimulationEngine.Exceptions;
 
 namespace SimulationEngine.Modules.SimulationModelModule.Components
 {
@@ -26,23 +26,22 @@ namespace SimulationEngine.Modules.SimulationModelModule.Components
 
         public new void SendNoticeMessage(Message message)
         {
-            //presunuti zpravy do meziagentove komunikace
-            ControlAgent.AgentsComunnication(message);
+            ControlAgent.AgentsComunnicationExecution(message);
         }
 
         public void SendRequestMessage(Message message)
         {
-            ControlAgent.AgentsComunnication(message);
+            ControlAgent.AgentsComunnicationExecution(message);
         }
 
         public void SendResponseMessage(Message message)
         {
-            ControlAgent.AgentsComunnication(message);
+            ControlAgent.AgentsComunnicationExecution(message);
         }
 
         public void SendCallMessage(Message message)
         {
-            ControlAgent.AgentsComunnication(message);
+            ControlAgent.AgentsComunnicationExecution(message);
         }
 
         protected void CommunicationToAssistent(Message message)
@@ -54,7 +53,7 @@ namespace SimulationEngine.Modules.SimulationModelModule.Components
             }
             else
             {
-                throw new Exception("Assistant " + message.Addressee + " not found.");
+                throw new AddresseeNotFoundException(message.Addressee);
             }
         }
     }

@@ -1,5 +1,4 @@
 ﻿using SimulationEngine.Communication;
-using SimulationEngine.SimulatorWriters;
 
 namespace SimulationEngine.Modules.DiscreteSimulationModule
 {
