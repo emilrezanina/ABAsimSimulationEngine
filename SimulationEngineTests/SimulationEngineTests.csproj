@@ -48,14 +48,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="SimulationModelTests.cs" />
-    <Compile Include="Structures\AgentBManager.cs" />
-    <Compile Include="Structures\AgentAManager.cs" />
-    <Compile Include="CommunicationTests.cs" />
     <Compile Include="DynamicAgentTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Structures\AgentFactories\ControlAgentFactory.cs" />
+    <Compile Include="Structures\AgentFactories\ControlAgentReceivedHandoverMessageFactory.cs" />
+    <Compile Include="Structures\DynamicAgentManager.cs" />
+    <Compile Include="Structures\ManagerProccessingHandoverMessage.cs" />
     <Compile Include="Structures\IdentficatorSets\CodeMessages.cs" />
     <Compile Include="Structures\IdentficatorSets\ComponentNames.cs" />
     <Compile Include="Structures\IdentficatorSets\MessageParameterNames.cs" />
+    <Compile Include="Structures\MessageFactories\MessageFactory.cs" />
+    <Compile Include="TestSetting.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -69,6 +72,7 @@
       <Name>SimulationEngine</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
