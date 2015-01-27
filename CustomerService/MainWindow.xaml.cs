@@ -12,7 +12,6 @@ using SimulationEngine.Communication;
 using SimulationEngine.Modules.SimulationModelModule;
 using SimulationEngine.Modules.SimulationModelModule.Components;
 using SimulationEngine.SimulationKernel;
-using SimulationEngine.SimulatorWriters;
 
 namespace CustomerService
 {
@@ -174,20 +173,11 @@ namespace CustomerService
             BindingOperations.EnableCollectionSynchronization(ResourcesA, _resourcesALock);
             BindingOperations.EnableCollectionSynchronization(ResourcesB, _resourcesBLock);
 
-            var communicationOutputProvider = new CommunicationOutputProvider();
-            var actualTimeOutputProvider = new ActualTimeOutputProvider();
-            _simulation = new SimulationContext
-            {
-                ActualTimeOutputProvider = actualTimeOutputProvider,
-                MessageOutputProvider = communicationOutputProvider
-            };
+
+            _simulation = new SimulationContext();
 
             InitializeComponent();
             DataContext = this;
-            var communicationOutputReciever = new CommunicationOutputReciever(CommunicationOutput, Dispatcher);
-            var actualTimeOutputReciever = new ActualTimeOutputReciever(ActualTimeTextBlock, Dispatcher);
-            communicationOutputProvider.Subscribe(communicationOutputReciever);
-            actualTimeOutputProvider.Subscribe(actualTimeOutputReciever);
             new BearInjection(ThisWindow).Activate();
         }
 
