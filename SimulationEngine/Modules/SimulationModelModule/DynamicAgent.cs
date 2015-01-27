@@ -19,6 +19,11 @@ namespace SimulationEngine.Modules.SimulationModelModule
             return _owners.Peek();
         }
 
+        public int GetOwnerCount()
+        {
+            return _owners.Count;
+        }
+
         public void FullSetAgentModel(AgentModel model)
         {
             Model = model;
