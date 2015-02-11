@@ -109,5 +109,12 @@ namespace SimulationEngine.Communication
             stringBuilder.Append("};");
             return stringBuilder.ToString();
         }
+
+        public bool HasSameDataParameters(Message second)
+        {
+            return DataParameters.Count == second.DataParameters.Count 
+                && DataParameters.All(dataParameter => 
+                    second.DataParameters.ContainsKey(dataParameter.Key));
+        }
     }
 }
