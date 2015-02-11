@@ -40,6 +40,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Communication\MessageProvider.cs" />
+    <Compile Include="Communication\MessageRegister.cs" />
     <Compile Include="Exceptions\AddresseeNotFoundException.cs" />
     <Compile Include="Exceptions\AgentIsAlreadyRegistredException.cs" />
     <Compile Include="Exceptions\ComponentIsAlreadyRegistredException.cs" />
@@ -74,6 +75,7 @@
     <Compile Include="SimulationKernel\SimulationContext.cs" />
     <Compile Include="SimulatorWriters\ActualTimeOutputProvider.cs" />
     <Compile Include="SimulatorWriters\CommunicationOutputProvider.cs" />
+    <Compile Include="Verification\SimulationModelVerificator.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
