@@ -12,7 +12,8 @@ namespace SimulationEngine.Modules.SimulationModelModule
     {
         public AgentModel Model { get; protected set; }
         private readonly IList<IComponent> _components;
-        private readonly IDictionary<string, string[]> _mapOfOwnMessageCodes;
+        public MessageRegister IncomingMessageRegister { get; private set; }
+        public MessageRegister OutgoingMessageRegister { get; private set; }
         private readonly Mailbox _mailbox;
         public IReciveSendMessage MessageSenderAndReciever { get; set; }
 
@@ -32,7 +33,8 @@ namespace SimulationEngine.Modules.SimulationModelModule
         protected AbstractAgent(IReciveSendMessage messageSenderAndReciever, AgentManager manager)
         {
             _components = new List<IComponent>();
-            _mapOfOwnMessageCodes = new Dictionary<string, string[]>();
+            IncomingMessageRegister = new MessageRegister();
+            OutgoingMessageRegister = new MessageRegister();
             Manager = manager;
             _mailbox = new Mailbox();
             MessageSenderAndReciever = messageSenderAndReciever;
@@ -57,21 +59,6 @@ namespace SimulationEngine.Modules.SimulationModelModule
         public IComponent CancellingComponent(IComponent component)
         {
             return _components.Remove(component) ? component : null;
-        }
-
-        public void RegistrationCodeMessage(string codeMessage, params string[] attributes)
-        {
-            _mapOfOwnMessageCodes.Add(codeMessage, attributes);
-        }
-
-        public string CancellingCodeMessage(string codeMessage)
-        {
-            return _mapOfOwnMessageCodes.Remove(codeMessage) ? codeMessage : null;
-        }
-
-        public bool HasCodeMessage(string codeMessage)
-        {
-            return _mapOfOwnMessageCodes.ContainsKey(codeMessage);
         }
 
         public virtual void ReciveMessage(Message message)
@@ -120,9 +107,13 @@ namespace SimulationEngine.Modules.SimulationModelModule
 
         private bool HasMessagesSameDataParameters(Message message, Message waitingMessage)
         {
-            var attributes = _mapOfOwnMessageCodes[message.Code];
-            return attributes.All(atribut => 
-                message.DataParameters[atribut].Equals(waitingMessage.DataParameters[atribut]));
+            var foundMsg = IncomingMessageRegister.GetMessages().FirstOrDefault(messageFromRegister => 
+                messageFromRegister.Code == message.Code);
+            if (foundMsg == null)
+                return false;
+            return foundMsg.DataParameters.All(dataParameter => 
+                message.DataParameters.ContainsKey(dataParameter.Key) 
+                && waitingMessage.DataParameters.ContainsKey(dataParameter.Key));
         }
 
         private void SendAdressMessage(Message message)
