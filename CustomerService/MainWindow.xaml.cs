@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Windows;
@@ -192,7 +194,11 @@ namespace CustomerService
             var agentSurroundings = new ControlAgent(_simulation.DiscreteSimController, managerSurroundings);
             agentSurroundings.RegistrationComponent(processEnteringCustomer);
             simModel.RegistrationControlAgent(agentSurroundings);
-            agentSurroundings.RegistrationCodeMessage(MessageCodeManager.OutgoingCustomer, new[] { ParameterNameManager.Applicant });
+
+            var outgoingCustomerMsg = new Message(TypeMessage.Notice, null, null, MessageCodeManager.OutgoingCustomer, 
+                null, 0);
+            outgoingCustomerMsg.AddDataParameter(ParameterNameManager.Applicant, null);
+            agentSurroundings.IncomingMessageRegister.RegistrationPrototypeMessage(outgoingCustomerMsg);
 
             AgentManager managerService = new ManagerService(ComponentNameManager.AgentService);
             var processMoveCustomer = new ProcessMoveCustomer(ComponentNameManager.ProcessMoveCustomer,
@@ -209,8 +215,15 @@ namespace CustomerService
             agentService.RegistrationComponent(processServiceB);
             agentService.RegistrationComponent(processCustomerOutgoing);
             simModel.RegistrationControlAgent(agentService);
-            agentService.RegistrationCodeMessage(MessageCodeManager.IncomingCustomer, new [] { ParameterNameManager.Customer });
-            agentService.RegistrationCodeMessage(MessageCodeManager.DeliverResource, new[] { ParameterNameManager.Applicant });
+
+            var incomingCustomerMsg = new Message(TypeMessage.Notice, null, null, MessageCodeManager.IncomingCustomer,
+                null, 0);
+            incomingCustomerMsg.AddDataParameter(ParameterNameManager.Customer, null);
+            agentService.IncomingMessageRegister.RegistrationPrototypeMessage(incomingCustomerMsg);
+            var deliverResourceMsg = new Message(TypeMessage.Response, null, null, MessageCodeManager.DeliverResource,
+                null, 0);
+            deliverResourceMsg.AddDataParameter(ParameterNameManager.Applicant, null);
+            agentService.IncomingMessageRegister.RegistrationPrototypeMessage(deliverResourceMsg);
 
             var managerResourceAdministrator = new ManagerResourceAdministrator(ComponentNameManager.AgentResourceAdministrator);
             var processMoveResource = new ProcessMoveResource(ComponentNameManager.ProcessMoveResource, _simulation.DiscreteSimController);
@@ -231,8 +244,15 @@ namespace CustomerService
             agentResourceAdministrator.RegistrationComponent(queryIsQueueOfApplicantEmpty);
             agentResourceAdministrator.RegistrationComponent(actionRemoveApplicantFromQueue);
             simModel.RegistrationControlAgent(agentResourceAdministrator);
-            agentResourceAdministrator.RegistrationCodeMessage(MessageCodeManager.DeliverResource, new[] { ParameterNameManager.Applicant });
-            agentResourceAdministrator.RegistrationCodeMessage(MessageCodeManager.CompleteMoveResource, new[] { ParameterNameManager.Resource });
+
+            deliverResourceMsg = new Message(TypeMessage.Request, null, null, MessageCodeManager.DeliverResource,
+                null, 0);
+            deliverResourceMsg.AddDataParameter(ParameterNameManager.Applicant, null);
+            agentResourceAdministrator.IncomingMessageRegister.RegistrationPrototypeMessage(deliverResourceMsg);
+            var completeMoveResourceMsg = new Message(TypeMessage.Finish, null, null, MessageCodeManager.CompleteMoveResource,
+                null, 0);
+            completeMoveResourceMsg.AddDataParameter(ParameterNameManager.Resource, null);
+            agentResourceAdministrator.IncomingMessageRegister.RegistrationPrototypeMessage(completeMoveResourceMsg);
 
             var startMessage = MessageProvider.CreateMessage(TypeMessage.Notice, null, 
                 ComponentNameManager.AgentSurroundings,
