@@ -2,7 +2,7 @@
 
 namespace SimulationEngineTests.Structures.AgentFactories
 {
-    abstract class ControlAgentFactory
+    public abstract class ControlAgentFactory
     {
         public abstract ControlAgent CreateAgent();
     }

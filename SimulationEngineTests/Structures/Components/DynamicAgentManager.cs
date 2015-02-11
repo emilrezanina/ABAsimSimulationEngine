@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using SimulationEngine.Communication;
+﻿using SimulationEngine.Communication;
 using SimulationEngine.Modules.SimulationModelModule.Components;
 
-namespace SimulationEngineTests.Structures
+namespace SimulationEngineTests.Structures.Components
 {
     class DynamicAgentManager : DynamicManager
     {

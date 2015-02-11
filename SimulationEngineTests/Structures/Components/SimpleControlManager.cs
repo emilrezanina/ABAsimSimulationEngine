@@ -1,13 +1,12 @@
 ﻿using SimulationEngine.Communication;
 using SimulationEngine.Modules.SimulationModelModule.Components;
 
-namespace SimulationEngineTests.Structures
+namespace SimulationEngineTests.Structures.Components
 {
-    internal class ManagerProccessingHandoverMessage : ControlManager
+    class SimpleControlManager : ControlManager
     {
-        public ManagerProccessingHandoverMessage(string name) : base(name)
+        public SimpleControlManager(string name) : base(name)
         {
-            
         }
 
         public override void ProcessTheMessage(Message message)

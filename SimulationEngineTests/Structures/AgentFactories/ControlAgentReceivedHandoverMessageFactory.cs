@@ -1,11 +1,12 @@
 ﻿using SimulationEngine.Modules.DiscreteSimulationModule;
 using SimulationEngine.Modules.SimulationModelModule;
 using SimulationEngine.Modules.SimulationModelModule.Components;
+using SimulationEngineTests.Structures.Components;
 using SimulationEngineTests.Structures.IdentficatorSets;
 
 namespace SimulationEngineTests.Structures.AgentFactories
 {
-    class ControlAgentReceivedHandoverMessageFactory : ControlAgentFactory
+    public class ControlAgentReceivedHandoverMessageFactory : ControlAgentFactory
     {
         private readonly IReciveSendMessage _control;
         public ControlAgentReceivedHandoverMessageFactory(IReciveSendMessage control)
