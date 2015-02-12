@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using SimulationEngine.Communication;
+using SimulationEngine.Exceptions;
 using SimulationEngine.Modules.SimulationModelModule;
 using SimulationEngine.Verification;
 using SimulationEngineTests.Structures.AgentFactories;
@@ -24,7 +26,7 @@ namespace SimulationEngineTests
             ControlAgentFactory controlAgentFactory = new SimpleControlAgentFactory();
             var agent = controlAgentFactory.CreateAgent(ComponentNames.AgentA);
             var msg = new Message(TypeMessage.Notice, null, agent.Manager.Name, CodeMessages.BeginTest, null, 0);
-            agent.IncomingMessageRegister.RegistrationPrototypeMessage(msg);
+            agent.IncomingMessageRegister.RegistrationMessagePrototype(msg);
             Assert.False(agent.IncomingMessageRegister.IsEmpty());
         }
 
@@ -44,7 +46,7 @@ namespace SimulationEngineTests
             var agent = controlAgentFactory.CreateAgent(ComponentNames.AgentA);
             var msg = new Message(TypeMessage.Notice, null, agent.Manager.Name, CodeMessages.BeginTest, null, 0);
             msg.AddDataParameter(MessageParameterNames.Person, null);
-            agent.IncomingMessageRegister.RegistrationPrototypeMessage(msg);
+            agent.IncomingMessageRegister.RegistrationMessagePrototype(msg);
             Assert.Equal(msg, agent.IncomingMessageRegister.GetPrototypeMessage(msg.Type, msg.Code));
         }
 
@@ -56,7 +58,7 @@ namespace SimulationEngineTests
             var msg = new Message(TypeMessage.Notice, null, agent.Manager.Name, CodeMessages.BeginTest, null, 0);
             msg.AddDataParameter(MessageParameterNames.Person, null);
             msg.AddDataParameter(MessageParameterNames.Bike, null);
-            agent.IncomingMessageRegister.RegistrationPrototypeMessage(msg);
+            agent.IncomingMessageRegister.RegistrationMessagePrototype(msg);
             var searchedMsg = agent.IncomingMessageRegister.GetPrototypeMessage(msg.Type, msg.Code);
             Assert.Equal(2, searchedMsg.DataParameters.Count);
             Assert.True(searchedMsg.DataParameters.ContainsKey(MessageParameterNames.Person));
@@ -70,14 +72,14 @@ namespace SimulationEngineTests
             var agent = controlAgentFactory.CreateAgent(ComponentNames.AgentA);
             var msg = new Message(TypeMessage.Notice, null, agent.Manager.Name, CodeMessages.BeginTest, null, 0);
             msg.AddDataParameter(MessageParameterNames.Person, null);
-            agent.IncomingMessageRegister.RegistrationPrototypeMessage(msg);
-            var deletedMsg = agent.IncomingMessageRegister.CancellingPrototypeMessage(msg);
+            agent.IncomingMessageRegister.RegistrationMessagePrototype(msg);
+            var deletedMsg = agent.IncomingMessageRegister.CancellingMessagePrototype(msg);
             Assert.True(agent.IncomingMessageRegister.IsEmpty());
             Assert.Equal(msg, deletedMsg);
         }
 
 
-        public static IEnumerable<object[]> RegistredSameIncomingAndOutgoingPrototypeMessages
+        public static IEnumerable<object[]> RegistredSameIncomingAndOutgoingMessagePrototypes
         {
             get
             {
@@ -127,8 +129,8 @@ namespace SimulationEngineTests
         }
 
         [Theory]
-        [PropertyData("RegistredSameIncomingAndOutgoingPrototypeMessages")]
-        public void SucessInterfaceVerificationOfSimulationModel(IEnumerable<Message> prototypeMessages)
+        [PropertyData("RegistredSameIncomingAndOutgoingMessagePrototypes")]
+        public void SucessInterfaceVerificationOfSimulationModel(IEnumerable<Message> messagePrototypes)
         {
             var simModel = new SimulationModel();
             ControlAgentFactory controlAgentFactory = new SimpleControlAgentFactory();
@@ -137,14 +139,40 @@ namespace SimulationEngineTests
             simModel.RegistrationControlAgent(agentA);
             simModel.RegistrationControlAgent(agentB);
 
-            foreach (var prototypeMessage in prototypeMessages)
+            foreach (var messagePrototype in messagePrototypes)
             {
-                agentA.OutgoingMessageRegister.RegistrationPrototypeMessage(prototypeMessage);
-                agentB.IncomingMessageRegister.RegistrationPrototypeMessage(prototypeMessage);
+                agentA.OutgoingMessageRegister.RegistrationMessagePrototype(messagePrototype);
+                agentB.IncomingMessageRegister.RegistrationMessagePrototype(messagePrototype);
             }
             Assert.True(new SimulationModelVerificator(simModel).InterfaceVerification());
         }
 
-        //dodelat test na kontrolu registrace dvou stejnych zprav
+        public static IEnumerable<object[]> PairTwoMessagePrototypeWithSameTypeAndCode
+        {
+            get
+            {
+                yield return new object[]
+                {
+                        TestSetting.GetSimpleMessageWithDataParameters(CodeMessages.NewMessage, 1),
+                        TestSetting.GetSimpleMessageWithDataParameters(CodeMessages.NewMessage, 1)
+                };
+
+                yield return new object[]
+                {
+                        TestSetting.GetSimpleMessageWithDataParameters(CodeMessages.NewMessage, 1),
+                        TestSetting.GetSimpleMessageWithDataParameters(CodeMessages.NewMessage, 2)
+                };
+            }
+        }
+
+        [Theory]
+        [PropertyData("PairTwoMessagePrototypeWithSameTypeAndCode")]
+        public void AddSecondSameMessagePrototypeToIncomingMessageRegisterThrowException(Message firstMsg, Message secondMsg)
+        {
+            ControlAgentFactory controlAgentFactory = new SimpleControlAgentFactory();
+            var agent = controlAgentFactory.CreateAgent(ComponentNames.AgentA);
+            agent.IncomingMessageRegister.RegistrationMessagePrototype(firstMsg);
+            Assert.Throws<MessagePrototypeIsRegistredException>(() => agent.IncomingMessageRegister.RegistrationMessagePrototype(secondMsg));
+        }
     }
 }
