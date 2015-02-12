@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using SimulationEngine.Exceptions;
 
 namespace SimulationEngine.Communication
 {
@@ -12,14 +13,18 @@ namespace SimulationEngine.Communication
             _messages = new List<Message>();
         }
 
-        public void RegistrationMessagePrototype(Message msg)
+        public void RegistrationMessagePrototype(Message message)
         {
-            _messages.Add(msg);
+            if (_messages.Any(msgPrototype => msgPrototype.Type == message.Type 
+                                              && msgPrototype.Code == message.Code))
+                throw new MessagePrototypeIsRegistredException(message);
+
+            _messages.Add(message);
         }
 
-        public Message CancellingMessagePrototype(Message msg)
+        public Message CancellingMessagePrototype(Message message)
         {
-            return _messages.Remove(msg) ? msg : null;
+            return _messages.Remove(message) ? message : null;
         }
 
         public Message GetPrototypeMessage(TypeMessage type, string code)
