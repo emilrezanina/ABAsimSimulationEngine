@@ -14,9 +14,9 @@ namespace SimulationEngineTests.Structures.AgentFactories
             _control = control;
         }
 
-        public override ControlAgent CreateAgent()
+        public override ControlAgent CreateAgent(string name)
         {
-            ControlManager manager = new ManagerProccessingHandoverMessage(ComponentNames.AgentA);
+            ControlManager manager = new ManagerProccessingHandoverMessage(name);
             var agent = new ControlAgent(_control, manager);
             return agent;
         }
