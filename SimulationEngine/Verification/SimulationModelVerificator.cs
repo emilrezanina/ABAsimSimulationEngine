@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using SimulationEngine.Communication;
 using SimulationEngine.Modules.SimulationModelModule;
 
 namespace SimulationEngine.Verification
 {
-    class SimulationModelVerificator
+    public class SimulationModelVerificator
     {
         private readonly List<string> _errorMessages;
         public SimulationModel Model { get; private set; }
@@ -17,31 +16,31 @@ namespace SimulationEngine.Verification
             Model = model;
         }
 
-        bool InterfaceVerification()
+        public bool InterfaceVerification()
         {
             return Model.Agents.Aggregate(true, (current, controlAgent) 
                 => current && ControlAgentInterfaceCheck(controlAgent));
         }
 
-        bool ControlAgentInterfaceCheck(ControlAgent agent)
+        private bool ControlAgentInterfaceCheck(ControlAgent agent)
         {
             var withoutProblem = true;
             foreach (var outgoingPrototypeMsg in agent.OutgoingMessageRegister.GetMessages())
             {
-                var findReceiveHandlerForMessagePrototype = HasOutputMessageHasReceiveHandler(outgoingPrototypeMsg);
-                if (findReceiveHandlerForMessagePrototype)
+                var tryFindReceiveHandlerForMessagePrototype = HasOutputMessageHasReceiveHandler(outgoingPrototypeMsg);
+                if (!tryFindReceiveHandlerForMessagePrototype)
                 {
                     _errorMessages.Add("");
                 }
-                withoutProblem = withoutProblem && findReceiveHandlerForMessagePrototype;
+                withoutProblem = withoutProblem && tryFindReceiveHandlerForMessagePrototype;
             }
             return withoutProblem;
             
         }
 
-        bool HasOutputMessageHasReceiveHandler(Message outgoingPrototypeMsg)
+        private bool HasOutputMessageHasReceiveHandler(Message outgoingPrototypeMsg)
         {
-            var addressee = (AbstractAgent) Model.FindAddressee(outgoingPrototypeMsg.Addressee);
+            var addressee = Model.FindAddressee(outgoingPrototypeMsg.Addressee).ControlAgent;
             if (addressee == null)
                 return false;
 
@@ -49,6 +48,11 @@ namespace SimulationEngine.Verification
             var incomingPrototypeMsg = register.GetPrototypeMessage(outgoingPrototypeMsg.Type, outgoingPrototypeMsg.Code);
             return incomingPrototypeMsg != null && 
                 incomingPrototypeMsg.HasSameDataParameters(outgoingPrototypeMsg);
+        }
+
+        public IEnumerable<string> GetErrorMessages()
+        {
+            return _errorMessages;
         }
     }
 }
