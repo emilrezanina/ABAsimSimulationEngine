@@ -12,12 +12,12 @@ namespace SimulationEngine.Communication
             _messages = new List<Message>();
         }
 
-        public void RegistrationPrototypeMessage(Message msg)
+        public void RegistrationMessagePrototype(Message msg)
         {
             _messages.Add(msg);
         }
 
-        public Message CancellingPrototypeMessage(Message msg)
+        public Message CancellingMessagePrototype(Message msg)
         {
             return _messages.Remove(msg) ? msg : null;
         }
