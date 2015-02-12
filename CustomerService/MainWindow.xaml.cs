@@ -198,7 +198,7 @@ namespace CustomerService
             var outgoingCustomerMsg = new Message(TypeMessage.Notice, null, null, MessageCodeManager.OutgoingCustomer, 
                 null, 0);
             outgoingCustomerMsg.AddDataParameter(ParameterNameManager.Applicant, null);
-            agentSurroundings.IncomingMessageRegister.RegistrationPrototypeMessage(outgoingCustomerMsg);
+            agentSurroundings.IncomingMessageRegister.RegistrationMessagePrototype(outgoingCustomerMsg);
 
             AgentManager managerService = new ManagerService(ComponentNameManager.AgentService);
             var processMoveCustomer = new ProcessMoveCustomer(ComponentNameManager.ProcessMoveCustomer,
@@ -219,11 +219,11 @@ namespace CustomerService
             var incomingCustomerMsg = new Message(TypeMessage.Notice, null, null, MessageCodeManager.IncomingCustomer,
                 null, 0);
             incomingCustomerMsg.AddDataParameter(ParameterNameManager.Customer, null);
-            agentService.IncomingMessageRegister.RegistrationPrototypeMessage(incomingCustomerMsg);
+            agentService.IncomingMessageRegister.RegistrationMessagePrototype(incomingCustomerMsg);
             var deliverResourceMsg = new Message(TypeMessage.Response, null, null, MessageCodeManager.DeliverResource,
                 null, 0);
             deliverResourceMsg.AddDataParameter(ParameterNameManager.Applicant, null);
-            agentService.IncomingMessageRegister.RegistrationPrototypeMessage(deliverResourceMsg);
+            agentService.IncomingMessageRegister.RegistrationMessagePrototype(deliverResourceMsg);
 
             var managerResourceAdministrator = new ManagerResourceAdministrator(ComponentNameManager.AgentResourceAdministrator);
             var processMoveResource = new ProcessMoveResource(ComponentNameManager.ProcessMoveResource, _simulation.DiscreteSimController);
@@ -248,11 +248,11 @@ namespace CustomerService
             deliverResourceMsg = new Message(TypeMessage.Request, null, null, MessageCodeManager.DeliverResource,
                 null, 0);
             deliverResourceMsg.AddDataParameter(ParameterNameManager.Applicant, null);
-            agentResourceAdministrator.IncomingMessageRegister.RegistrationPrototypeMessage(deliverResourceMsg);
+            agentResourceAdministrator.IncomingMessageRegister.RegistrationMessagePrototype(deliverResourceMsg);
             var completeMoveResourceMsg = new Message(TypeMessage.Finish, null, null, MessageCodeManager.CompleteMoveResource,
                 null, 0);
             completeMoveResourceMsg.AddDataParameter(ParameterNameManager.Resource, null);
-            agentResourceAdministrator.IncomingMessageRegister.RegistrationPrototypeMessage(completeMoveResourceMsg);
+            agentResourceAdministrator.IncomingMessageRegister.RegistrationMessagePrototype(completeMoveResourceMsg);
 
             var startMessage = MessageProvider.CreateMessage(TypeMessage.Notice, null, 
                 ComponentNameManager.AgentSurroundings,
