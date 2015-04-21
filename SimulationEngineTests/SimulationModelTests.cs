@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using SimulationEngine.Communication;
 using SimulationEngine.Exceptions;
 using SimulationEngine.Modules.SimulationModelModule;

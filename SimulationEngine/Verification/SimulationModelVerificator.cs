@@ -22,17 +22,12 @@ namespace SimulationEngine.Verification
                 => current && ControlAgentInterfaceCheck(controlAgent));
         }
 
-        private bool ControlAgentInterfaceCheck(ControlAgent agent)
+        private bool ControlAgentInterfaceCheck(IAgent agent)
         {
-            var withoutProblem = true;
+            bool withoutProblem = true;
             foreach (var outgoingPrototypeMsg in agent.OutgoingMessageRegister.GetMessages())
             {
-                var tryFindReceiveHandlerForMessagePrototype = HasOutputMessageHasReceiveHandler(outgoingPrototypeMsg);
-                if (!tryFindReceiveHandlerForMessagePrototype)
-                {
-                    _errorMessages.Add("");
-                }
-                withoutProblem = withoutProblem && tryFindReceiveHandlerForMessagePrototype;
+                withoutProblem = withoutProblem && HasOutputMessageHasReceiveHandler(outgoingPrototypeMsg);
             }
             return withoutProblem;
             
@@ -42,12 +37,31 @@ namespace SimulationEngine.Verification
         {
             var addressee = Model.FindAddressee(outgoingPrototypeMsg.Addressee).ControlAgent;
             if (addressee == null)
+            {
+                _errorMessages.Add(ErrorStringManager.AddresseeWasntFound(outgoingPrototypeMsg));
                 return false;
-
+            }
             var register = addressee.IncomingMessageRegister;
             var incomingPrototypeMsg = register.GetPrototypeMessage(outgoingPrototypeMsg.Type, outgoingPrototypeMsg.Code);
-            return incomingPrototypeMsg != null && 
-                incomingPrototypeMsg.HasSameDataParameters(outgoingPrototypeMsg);
+            if (incomingPrototypeMsg == null)
+            {
+                _errorMessages.Add(ErrorStringManager.AddreseeDoesntHavePrototype(addressee, outgoingPrototypeMsg));
+                return false;
+            }
+            if (incomingPrototypeMsg.HasSameDataParameters(outgoingPrototypeMsg)) return true;
+            
+            _errorMessages.Add(ErrorStringManager.PrototypesDontHaveSameDataParameters(outgoingPrototypeMsg));
+            return false;
+        }
+
+        public bool IsEveryAgentAttachedToSimulationModel()
+        {
+            return Model.Agents.Aggregate(true, (current, controlAgent) => current && HasAgentAnyCommunication(controlAgent));
+        }
+
+        private bool HasAgentAnyCommunication(IAgent agent)
+        {
+            return agent.IncomingMessageRegister.IsEmpty() || agent.OutgoingMessageRegister.IsEmpty();
         }
 
         public IEnumerable<string> GetErrorMessages()

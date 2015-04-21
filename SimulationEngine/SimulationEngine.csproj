@@ -76,6 +76,7 @@
     <Compile Include="SimulationKernel\SimulationContext.cs" />
     <Compile Include="SimulatorWriters\ActualTimeOutputProvider.cs" />
     <Compile Include="SimulatorWriters\CommunicationOutputProvider.cs" />
+    <Compile Include="Verification\ErrorStringManager.cs" />
     <Compile Include="Verification\SimulationModelVerificator.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
