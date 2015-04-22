@@ -25,5 +25,17 @@ namespace SimulationEngine.Modules.SimulationModelModule
         {
             return DynamicAgents.Remove(agent) ? agent : null;
         }
+
+        public void AddSubmodel(AgentModel model)
+        {
+            if (Submodels.Contains(model))
+                return;
+            Submodels.Add(model);
+        }
+
+        public AgentModel RemoveSubmodel(AgentModel model)
+        {
+            return Submodels.Remove(model) ? model : null;
+        }
     }
 }
