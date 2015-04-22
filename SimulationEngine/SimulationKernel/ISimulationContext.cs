@@ -1,7 +1,6 @@
 ﻿using SimulationEngine.Modules.ContinuousSimulationModule;
 using SimulationEngine.Modules.DiscreteSimulationModule;
 using SimulationEngine.Modules.SimulationModelModule;
-using SimulationEngine.SimulatorWriters;
 
 namespace SimulationEngine.SimulationKernel
 {

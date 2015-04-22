@@ -45,6 +45,7 @@
     <Compile Include="Exceptions\AgentIsAlreadyRegistredException.cs" />
     <Compile Include="Exceptions\ComponentIsAlreadyRegistredException.cs" />
     <Compile Include="Exceptions\MessagePrototypeIsRegistredException.cs" />
+    <Compile Include="Framework\Abaframe.cs" />
     <Compile Include="Modules\SimulationModelModule\Components\AbstractComponent.cs" />
     <Compile Include="Modules\SimulationModelModule\Components\AddressableComponent.cs" />
     <Compile Include="Modules\SimulationModelModule\Components\ContinuousAssistant.cs" />
@@ -79,6 +80,7 @@
     <Compile Include="Verification\ErrorStringManager.cs" />
     <Compile Include="Verification\SimulationModelVerificator.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
