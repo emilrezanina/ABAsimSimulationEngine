@@ -10,7 +10,6 @@ namespace SimulationEngine.SimulationKernel
     public class SimulationContext : ISimulationKernel, ISimulationContext
     {
         private Task _performanceThread;
-        //private Thread _performanceThread;
 
         public DiscreteSimulationController DiscreteSimController { get; private set; }
         public SimulationModel SimModel { get; set; }
@@ -49,7 +48,6 @@ namespace SimulationEngine.SimulationKernel
             if (_performanceThread == null)
             {
                 _performanceThread = new Task(DiscreteSimController.Performance);
-                //_performanceThread = new Thread(DiscreteSimController.Performance);
                 _performanceThread.Start();
             }
 
