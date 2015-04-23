@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using SimulationEngine.Modules.SimulationModelModule;
 using SimulationEngine.SimulationKernel;
+using SimulationEngine.Verification;
 
 namespace SimulationEngine
 {
@@ -18,6 +20,12 @@ namespace SimulationEngine
             {
                 simulationContext.Run();
             }
+        }
+
+        public bool Verification(SimulationModel model)
+        {
+            var verificator = new SimulationModelVerificator(model);
+            return verificator.InterfaceVerification() && verificator.IsEveryAgentAttachedToSimulationModel();
         }
     }
 }

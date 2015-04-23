@@ -45,7 +45,6 @@
     <Compile Include="Exceptions\AgentIsAlreadyRegistredException.cs" />
     <Compile Include="Exceptions\ComponentIsAlreadyRegistredException.cs" />
     <Compile Include="Exceptions\MessagePrototypeIsRegistredException.cs" />
-    <Compile Include="Framework\Abaframe.cs" />
     <Compile Include="Modules\SimulationModelModule\Components\AbstractComponent.cs" />
     <Compile Include="Modules\SimulationModelModule\Components\AddressableComponent.cs" />
     <Compile Include="Modules\SimulationModelModule\Components\ContinuousAssistant.cs" />
